@@ -8,6 +8,6 @@ namespace CalculateLib
 {
     interface IOperand
     {
-        Calculate[] MakeLogical(LogicTree[] logicalTree);
+        LogicTree[] MakeLogical(LogicTree[] logicalTree);
     }
 }
