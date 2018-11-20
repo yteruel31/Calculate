@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CalculateLib
 {
-    interface Operand
+    interface IOperand
     {
-        Calculate[] MakeLogical();
+        Calculate[] MakeLogical(LogicTree[] logicalTree);
     }
 }
