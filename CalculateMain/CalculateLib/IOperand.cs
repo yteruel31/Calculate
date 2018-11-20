@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CalculateLib
 {
-    public class Class1
+    interface Operand
     {
+        Calculate[] MakeLogical();
     }
 }
