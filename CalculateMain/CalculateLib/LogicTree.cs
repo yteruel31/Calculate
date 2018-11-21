@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,8 +22,8 @@ namespace CalculateLib
 
             for (int j = 0; j < parseInput.Length; j++)
             {
-                if (parseInput[j].Equals('*') || parseInput[j].Equals('/') || parseInput[j].Equals('+') ||
-                    parseInput[j].Equals('-'))
+                if (parseInput[j] == "*" || parseInput[j] == "/" || parseInput[j] == "+" ||
+                    parseInput[j] == "-")
                 {
                     logicTree[j].Operator = Char.Parse(parseInput[j]);
                 }
