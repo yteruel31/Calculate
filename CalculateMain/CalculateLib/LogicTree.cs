@@ -14,7 +14,7 @@ namespace CalculateLib
         public LogicTree LeftOperand { get; set; }
         public LogicTree RightOperand { get; set; }
 
-        private static LogicTree[] BuildLogicalTree(String[] parseInput)
+        public static LogicTree[] BuildLogicalTree(string[] parseInput)
         {
             LogicTree[] logicTree = new LogicTree[parseInput.Length];
             for (int i = 0; i < parseInput.Length; i++)
