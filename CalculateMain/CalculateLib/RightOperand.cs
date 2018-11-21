@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CalculateLib
 {
-    class RightOperand : IOperand
+    class RightOperand
     {
-        public LogicTree[] MakeLogical(LogicTree[] logicalTree)
+        public static LogicTree[] MakeLogical(LogicTree[] logicalTree)
         {
             for (int i = 1; i < logicalTree.Length; i++)
             {
