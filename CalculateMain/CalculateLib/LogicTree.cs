@@ -34,5 +34,35 @@ namespace CalculateLib
             }
             return logicTree;
         }
+        private decimal GetValue()
+        {
+            if (Operator == 0)
+                return Number;
+            else
+                switch (Operator)
+                {
+                    case '+':
+                        return LeftOperand.GetValue() + RightOperand.GetValue();
+                    case '-':
+                        return LeftOperand.GetValue() - RightOperand.GetValue();
+                    case '*':
+                        return LeftOperand.GetValue() * RightOperand.GetValue();
+                    case '/':
+                        return LeftOperand.GetValue() / RightOperand.GetValue();
+                    default: return 0;
+                }
+        }
+        public static string[] SolveLogicTree(LogicTree[] logicTree)
+        {
+            int answersIndex = 1;
+            for (int i = 0; i < logicTree.Length; i++)
+            {
+                if (logicTree[i].Operator != '\0')
+                    answersIndex++;
+            }
+            string[] answers = new string[answersIndex];
+            answers[answers.Length - 1] = "La réponse est : " + logicTree[logicTree.Length - 2].GetValue();
+            return answers;
+        }
     }
 }
