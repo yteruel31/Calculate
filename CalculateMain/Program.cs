@@ -12,11 +12,21 @@ namespace CalculateMain
     {
         static void Main(string[] args)
         {
-            string inputString = Console.ReadLine();
-            string[] answers = Base.Solve(inputString);
-            foreach (var value in answers)
+            while (true)
             {
-                Console.WriteLine(value);
+                string inputString = Console.ReadLine();
+                if (!Base.ValidInput(inputString))
+                {
+                    Console.WriteLine("Mauvaise entrée");
+                }
+                else
+                {
+                    string[] answers = Base.Solve(inputString);
+                    foreach (var value in answers)
+                    {
+                        Console.WriteLine(value);
+                    }
+                }
             }
         }
     }

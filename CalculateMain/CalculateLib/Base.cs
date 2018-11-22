@@ -1,37 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CalculateLib
 {
     public class Base
     {
-        public bool ValidInput(string inputString)
+        Base(string input)
         {
-            if (String.IsNullOrWhiteSpace(inputString) ||
-                !Char.IsNumber(inputString[inputString.Length - 1]))
+            if (input.Contains('('.ToString()) || input.Contains(')'.ToString()))
             {
-                return false;
+                string inputStringWithParentheses = GetParenthesis(input);
+                string[] solvedParenthesis = Solve(inputStringWithParentheses);
+                //string stringConverted =
             }
+        }
 
-            for (int i = 0; i < inputString.Length; i++)
-            {
-                if (!Char.IsNumber(inputString[i]))
-                {
-                    if (inputString[i] != '*' &&
-                        inputString[i] != '/' &&
-                        inputString[i] != '+' &&
-                        inputString[i] != '-' &&
-                        inputString[i] != '.')
-                    {
+        public static bool ValidInput(string inputString)
+        {
+            if (string.IsNullOrWhiteSpace(inputString) ||
+                !char.IsNumber(inputString[inputString.Length - 1]))
+                return false;
+
+            foreach (var number in inputString)
+                if (!char.IsNumber(number))
+                    if (
+                        number != '*' &&
+                        number != '/' &&
+                        number != '+' &&
+                        number != '-' &&
+                        number != '.'
+                    )
                         return false;
-                    }
-                }
-            }
             return true;
         }
+
         public static string[] Solve(string inputString)
         {
             string[] parsedInput = ParseInputString(inputString);
@@ -41,25 +44,47 @@ namespace CalculateLib
             string[] answer = LogicTree.SolveLogicTree(logicTree);
             return answer;
         }
-        public static string[] ParseInputString(string inputString)
-        {
-            int sizeOfString = 0;
 
+        public static string GetParenthesis(string inputString)
+        {
+            int firstIndex = 0;
+            int lenghIndex = 0;
             for (int i = 0; i < inputString.Length; i++)
             {
-                if (i < inputString.Length)
+                if (inputString[i] == '(')
                 {
-                    if (inputString[i].Equals('*') || inputString[i].Equals('/') || inputString[i].Equals('+') || inputString[i].Equals('-'))
-                        sizeOfString++;
+                    firstIndex = i;
+                }
+
+                lenghIndex++;
+                if (inputString[i] == ')')
+                {
+                    break;
                 }
             }
-            sizeOfString = sizeOfString * 2 + 1;
-            string[] parsedInput = new string[sizeOfString];
 
-            StringBuilder stringBuilder = new StringBuilder();
+            return inputString.Substring(firstIndex, lenghIndex);
+        }
+        static string ConvertStringArrayToStringJoin(string[] array)
+        {
+            string result = string.Join("", array);
+            return result;
+        }
+        public static string[] ParseInputString(string inputString)
+        {
+            var sizeOfString = 0;
+
+            for (var i = 0; i < inputString.Length; i++)
+                if (i < inputString.Length)
+                    if (inputString[i].Equals('*') || inputString[i].Equals('/') || inputString[i].Equals('+') ||
+                        inputString[i].Equals('-'))
+                        sizeOfString++;
+            sizeOfString = sizeOfString * 2 + 1;
+            var parsedInput = new string[sizeOfString];
+
+            var stringBuilder = new StringBuilder();
             sizeOfString = 0;
             foreach (var charInput in inputString)
-            {
                 if (charInput != '*' && charInput != '/' && charInput != '+' && charInput != '-')
                 {
                     stringBuilder.Append(charInput);
@@ -72,11 +97,10 @@ namespace CalculateLib
                     parsedInput[sizeOfString] = charInput.ToString();
                     sizeOfString++;
                 }
-            }
+
             parsedInput[sizeOfString] = stringBuilder.ToString();
 
             return parsedInput;
         }
-        
     }
 }

@@ -18,18 +18,20 @@ namespace CalculateLib
         {
             LogicTree[] logicTree = new LogicTree[parseInput.Length];
             for (int i = 0; i < parseInput.Length; i++)
+            {
                 logicTree[i] = new LogicTree();
+            }
 
             for (int j = 0; j < parseInput.Length; j++)
             {
                 if (parseInput[j] == "*" || parseInput[j] == "/" || parseInput[j] == "+" ||
                     parseInput[j] == "-")
                 {
-                    logicTree[j].Operator = Char.Parse(parseInput[j]);
+                    logicTree[j].Operator = char.Parse(parseInput[j]);
                 }
                 else
                 {
-                    logicTree[j].Number = Decimal.Parse(parseInput[j]);
+                    logicTree[j].Number = decimal.Parse(parseInput[j]);
                 }
             }
             return logicTree;
