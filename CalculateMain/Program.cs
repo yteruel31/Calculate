@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using CalculateLib;
+using CalculateLib.Operands;
 
 namespace CalculateMain
 {
@@ -15,18 +16,10 @@ namespace CalculateMain
             while (true)
             {
                 string inputString = Console.ReadLine();
-                if (!Base.ValidInput(inputString))
-                {
-                    Console.WriteLine("Mauvaise entrée");
-                }
-                else
-                {
-                    string[] answers = Base.Solve(inputString);
-                    foreach (var value in answers)
-                    {
-                        Console.WriteLine(value);
-                    }
-                }
+
+                OperandBase operand = OperandFactory.Create(inputString);
+
+                Console.WriteLine(operand.Calculate());
             }
         }
     }
