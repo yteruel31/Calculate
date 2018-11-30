@@ -41,11 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base.cs" />
-    <Compile Include="LeftOperand.cs" />
-    <Compile Include="LogicTree.cs" />
+    <Compile Include="Operands\OperandAddition.cs" />
+    <Compile Include="Operands\OperandBase.cs" />
+    <Compile Include="Operands\OperandDivide.cs" />
+    <Compile Include="Operands\OperandFactory.cs" />
+    <Compile Include="Operands\OperandFunctionBase.cs" />
+    <Compile Include="Operands\OperandMultiply.cs" />
+    <Compile Include="Operands\OperandSubstract.cs" />
+    <Compile Include="Operands\OperandValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RightOperand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

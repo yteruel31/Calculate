@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculateMain", "CalculateM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculateLib", "CalculateLib\CalculateLib.csproj", "{1DDCF52B-0C47-4201-A644-B998260FB16D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculateTest", "..\CalculateTest\CalculateTest.csproj", "{33940864-CA06-410D-AA8D-0968E137DD06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateTest", "..\CalculateTest\CalculateTest.csproj", "{33940864-CA06-410D-AA8D-0968E137DD06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
