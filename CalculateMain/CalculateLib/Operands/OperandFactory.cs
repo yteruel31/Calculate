@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -8,12 +9,11 @@ namespace CalculateLib.Operands
 {
     public static class OperandFactory
     {
-        private static Regex parenthesisRegex = new Regex(@"\((?<content>[^)]*)\)", RegexOptions.Compiled);
+        private static Regex parenthesisRegex = new Regex(@"\((?<content>.+)\)$", RegexOptions.Compiled);
 
         public static OperandBase Create(string input)
         {
-            bool isParenthesis = input.Contains("(");
-            if (isParenthesis)
+            if (HasParenthesisToRemove(input))
             {
                 Create(GetOperationWithoutParenthesisString(input));
             }
@@ -78,6 +78,45 @@ namespace CalculateLib.Operands
             return null;
         }
 
+        public static bool HasParenthesisToRemove(string input)
+        {
+            if (!IsStartAndEndWithParenthesis(input))
+            {
+                return false;
+            }
+
+            if (!HasValueInsideParenthesis(input))
+            {
+                return false;
+            }
+
+            string[] groups = GetGroups(input);
+
+            return groups.Contains(input);
+        }
+
+        public static readonly Regex GroupRegex = new Regex(@"(?<content>\(.+\))", RegexOptions.Compiled);
+
+        public static string[] GetGroups(string input)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static bool HasValueInsideParenthesis(string input)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static bool IsStartAndEndWithParenthesis(string input)
+        {
+            if (input.Contains('(') && input.Contains(')'))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static string GetLeftOperandOfDivideString(string input)
         {
             string[] inputString = input.Split('/');
@@ -124,9 +163,13 @@ namespace CalculateLib.Operands
 
         public static string GetOperationWithoutParenthesisString(string input)
         {
-            return input.Contains("((") || input.Contains("))") || input.Contains("()")
-                ? null
-                : parenthesisRegex.Match(input).Groups["content"].Value;
+            var match = parenthesisRegex.Match(input);
+            if (match.Success)
+            {
+                return match.Groups["content"].Value;
+            }
+
+            return null;
         }
     }
 }
