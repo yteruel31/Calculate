@@ -96,11 +96,5 @@ namespace CalculateTest.OperandFactoryTests
             Assert.IsAssignableFrom<OperandValue>(operand);
             Assert.AreEqual(value, ((OperandValue) operand).Value);
         }
-
-        private void AssertIsOperandObj(OperandBase operand, OperandBase operand2)
-        {
-            Assert.IsAssignableFrom<OperandValue>(operand);
-            Assert.AreEqual(operand2, ((OperandValue) operand).Value);
-        }
     }
 }
