@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -95,26 +96,31 @@ namespace CalculateLib.Operands
             return groups.Contains(input);
         }
 
-        public static readonly Regex GroupRegex = new Regex(@"(?<content>\(.+\))", RegexOptions.Compiled);
-
         public static string[] GetGroups(string input)
         {
-            throw new NotImplementedException();
+            const string pattern = @"(?=(\((?>[^()]+|(?<o>)\(|(?<-o>)\))*(?(o)(?!)|)\)))";
+            IEnumerable<string> result = Regex.Matches(input, pattern).Cast<Match>().Select(x => x.Groups[1].Value);
+            return result.ToArray();
         }
 
         private static bool HasValueInsideParenthesis(string input)
         {
-            throw new NotImplementedException();
+            if (!parenthesisRegex.IsMatch(input))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static bool IsStartAndEndWithParenthesis(string input)
         {
-            if (input.Contains('(') && input.Contains(')'))
+            if (!input.Contains("(") && !input.Contains(")"))
             {
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         public static string GetLeftOperandOfDivideString(string input)
