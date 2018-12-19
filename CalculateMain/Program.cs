@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using CalculateLib;
+using CalculateLib.Operands;
 
 namespace CalculateMain
 {
@@ -12,11 +13,13 @@ namespace CalculateMain
     {
         static void Main(string[] args)
         {
-            string inputString = Console.ReadLine();
-            string[] answers = Base.Solve(inputString);
-            foreach (var value in answers)
+            while (true)
             {
-                Console.WriteLine(value);
+                string inputString = Console.ReadLine();
+
+                OperandBase operand = OperandFactory.Create(inputString);
+
+                Console.WriteLine(operand.Calculate());
             }
         }
     }
