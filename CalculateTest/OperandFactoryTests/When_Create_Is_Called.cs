@@ -77,7 +77,7 @@ namespace CalculateTest.OperandFactoryTests
             OperandBase operand = OperandFactory.Create("(1+2)*42");
 
             Assert.IsAssignableFrom<OperandMultiply>(operand);
-            OperandMultiply multiply = (OperandMultiply)operand;
+            OperandMultiply multiply = (OperandMultiply) operand;
             AssertIsOperandValue(multiply.RightOperand, 42);
             AssertIsOperand<OperandAddition>(multiply.LeftOperand, 1, 2);
         }
