@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -28,11 +28,10 @@ namespace CalculateLib.Operands
                 };
             }
 
-            bool isAddition = input.Contains("+");
-            if (isAddition)
+            if (IsOperation(input, '+'))
             {
-                string leftOperand = GetLeftOperandOfAdditionString(input);
-                string rightOperand = GetRightOperandOfAdditionString(input);
+                string leftOperand = GetLeftOperandOfOperationString(input, '+');
+                string rightOperand = GetRightOperandOfOperationString(input, '+');
                 return new OperandAddition()
                 {
                     LeftOperand = Create(leftOperand),
@@ -40,11 +39,10 @@ namespace CalculateLib.Operands
                 };
             }
 
-            bool isSubstract = input.Contains("-");
-            if (isSubstract)
+            if (IsOperation(input, '-'))
             {
-                string leftOperand = GetLeftOperandOfSubstractString(input);
-                string rightOperand = GetRightOperandOfSubstractString(input);
+                string leftOperand = GetLeftOperandOfOperationString(input, '-');
+                string rightOperand = GetRightOperandOfOperationString(input, '-');
                 return new OperandSubstract()
                 {
                     LeftOperand = Create(leftOperand),
@@ -52,11 +50,10 @@ namespace CalculateLib.Operands
                 };
             }
 
-            bool isMultiply = input.Contains("*");
-            if (isMultiply)
+            if (IsOperation(input, '*'))
             {
-                string leftOperand = GetLeftOperandOfMultiplyString(input);
-                string rightOperand = GetRightOperandOfMultiplyString(input);
+                string leftOperand = GetLeftOperandOfOperationString(input, '*');
+                string rightOperand = GetRightOperandOfOperationString(input, '*');
                 return new OperandMultiply()
                 {
                     LeftOperand = Create(leftOperand),
@@ -64,11 +61,10 @@ namespace CalculateLib.Operands
                 };
             }
 
-            bool isDivide = input.Contains("/");
-            if (isDivide)
+            if (IsOperation(input, '/'))
             {
-                string leftOperand = GetLeftOperandOfDivideString(input);
-                string rightOperand = GetRightOperandOfDivideString(input);
+                string leftOperand = GetLeftOperandOfOperationString(input, '/');
+                string rightOperand = GetRightOperandOfOperationString(input, '/');
                 return new OperandDivide()
                 {
                     LeftOperand = Create(leftOperand),
@@ -123,51 +119,24 @@ namespace CalculateLib.Operands
             return true;
         }
 
-        public static string GetLeftOperandOfDivideString(string input)
+        public static string GetLeftOperandOfOperationString(string input, char operation)
         {
-            string[] inputString = input.Split('/');
+            if (input.StartsWith("("))
+            {
+                string[] regGroup = GetGroups(input);
+                return regGroup[0];
+            }
+
+            string[] inputString = input.Split(operation);
             return inputString[0];
         }
 
-        public static string GetRightOperandOfDivideString(string input)
+        public static string GetRightOperandOfOperationString(string input, char operation)
         {
-            return input.Substring(GetLeftOperandOfDivideString(input).Length + 1);
+            return input.Substring(GetLeftOperandOfOperationString(input, operation).Length + 1);
         }
 
-        public static string GetLeftOperandOfMultiplyString(string input)
-        {
-            string[] inputString = input.Split('*');
-            return inputString[0];
-        }
-
-        public static string GetRightOperandOfMultiplyString(string input)
-        {
-            return input.Substring(GetLeftOperandOfMultiplyString(input).Length + 1);
-        }
-
-        public static string GetLeftOperandOfSubstractString(string input)
-        {
-            string[] inputString = input.Split('-');
-            return inputString[0];
-        }
-
-        public static string GetRightOperandOfSubstractString(string input)
-        {
-            return input.Substring(GetLeftOperandOfSubstractString(input).Length + 1);
-        }
-
-        public static string GetLeftOperandOfAdditionString(string input)
-        {
-            string[] inputString = input.Split('+');
-            return inputString[0];
-        }
-
-        public static string GetRightOperandOfAdditionString(string input)
-        {
-            return input.Substring(GetLeftOperandOfAdditionString(input).Length + 1);
-        }
-
-        public static string GetOperationWithoutParenthesisString(string input)
+        public static string GetOperationInsideParenthesisString(string input)
         {
             var match = parenthesisRegex.Match(input);
             if (match.Success)
