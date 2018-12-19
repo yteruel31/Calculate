@@ -121,30 +121,64 @@ namespace CalculateLib.Operands
 
         public static string GetLeftOperandOfOperationString(string input, char operation)
         {
-            if (input.StartsWith("("))
+            if (IsOperation(input, operation.ToString()))
             {
-                string[] regGroup = GetGroups(input);
-                return regGroup[0];
+                if (input.StartsWith("("))
+                {
+                    string[] regGroup = GetGroups(input);
+                    return regGroup[0];
+                }
+
+                string[] inputString = input.Split(operation);
+                return inputString[0];
             }
 
-            string[] inputString = input.Split(operation);
-            return inputString[0];
+            return null;
         }
 
         public static string GetRightOperandOfOperationString(string input, char operation)
         {
-            return input.Substring(GetLeftOperandOfOperationString(input, operation).Length + 1);
+            if (IsOperation(input, operation.ToString()))
+            {
+                return input.Substring(GetLeftOperandOfOperationString(input, operation).Length + 1);
+            }
+
+            return null;
         }
 
         public static string GetOperationInsideParenthesisString(string input)
         {
-            var match = parenthesisRegex.Match(input);
+            var match = ParenthesisRegex.Match(input);
             if (match.Success)
             {
                 return match.Groups["content"].Value;
             }
 
             return null;
+        }
+
+        public static bool IsOperation(string input, string operation)
+        {
+            var match = OutsideParenthesisRegex.Match(input);
+
+            if (!input.Contains("(") || !input.Contains(")"))
+            {
+                if (input.Contains(operation))
+                {
+                    return true;
+                }
+            }
+
+            if (match.Success)
+            {
+                if (match.Groups["before"].Value.EndsWith(operation) ||
+                    match.Groups["after"].Value.StartsWith(operation))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
