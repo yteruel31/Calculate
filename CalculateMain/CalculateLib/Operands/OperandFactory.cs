@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,13 +10,19 @@ namespace CalculateLib.Operands
 {
     public static class OperandFactory
     {
-        private static Regex parenthesisRegex = new Regex(@"\((?<content>.+)\)$", RegexOptions.Compiled);
+        private static Regex ParenthesisRegex = new Regex(@"\((?<content>.+)\)", RegexOptions.Compiled);
+
+        private static Regex GetGroupsRegex =
+            new Regex(@"(?=(\((?>[^()]+|(?<o>)\(|(?<-o>)\))*(?(o)(?!)|)\)))", RegexOptions.Compiled);
+
+        private static Regex OutsideParenthesisRegex =
+            new Regex(@"(?<before>.+)?\((.+)?\)(?<after>.+)?", RegexOptions.Compiled);
 
         public static OperandBase Create(string input)
         {
             if (HasParenthesisToRemove(input))
             {
-                Create(GetOperationWithoutParenthesisString(input));
+                return Create(GetOperationInsideParenthesisString(input));
             }
 
             bool isValue = decimal.TryParse(input, out decimal outValue);
@@ -28,7 +34,7 @@ namespace CalculateLib.Operands
                 };
             }
 
-            if (IsOperation(input, '+'))
+            if (IsOperation(input, "+"))
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '+');
                 string rightOperand = GetRightOperandOfOperationString(input, '+');
@@ -39,7 +45,7 @@ namespace CalculateLib.Operands
                 };
             }
 
-            if (IsOperation(input, '-'))
+            if (IsOperation(input, "-"))
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '-');
                 string rightOperand = GetRightOperandOfOperationString(input, '-');
@@ -50,7 +56,7 @@ namespace CalculateLib.Operands
                 };
             }
 
-            if (IsOperation(input, '*'))
+            if (IsOperation(input, "*"))
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '*');
                 string rightOperand = GetRightOperandOfOperationString(input, '*');
@@ -61,7 +67,7 @@ namespace CalculateLib.Operands
                 };
             }
 
-            if (IsOperation(input, '/'))
+            if (IsOperation(input, "/"))
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '/');
                 string rightOperand = GetRightOperandOfOperationString(input, '/');
@@ -94,14 +100,14 @@ namespace CalculateLib.Operands
 
         public static string[] GetGroups(string input)
         {
-            const string pattern = @"(?=(\((?>[^()]+|(?<o>)\(|(?<-o>)\))*(?(o)(?!)|)\)))";
-            IEnumerable<string> result = Regex.Matches(input, pattern).Cast<Match>().Select(x => x.Groups[1].Value);
+            var match = GetGroupsRegex.Matches(input);
+            var result = match.Cast<Match>().Select(x => x.Groups[1].Value);
             return result.ToArray();
         }
 
         private static bool HasValueInsideParenthesis(string input)
         {
-            if (!parenthesisRegex.IsMatch(input))
+            if (!ParenthesisRegex.IsMatch(input))
             {
                 return false;
             }
