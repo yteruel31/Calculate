@@ -1,19 +1,20 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Calculate.WPF.Annotations;
+using Calculate.Model;
+using Calculate.Model.Annotations;
 
-namespace Calculate.WPF.Model
+namespace Calculate.Model
 {
     public class TextInputModel : INotifyPropertyChanged
     {
-        private string textInput;
+        private string _textInput;
 
         public string TextInput
         {
-            get { return textInput; }
+            get { return _textInput; }
             set
             {
-                textInput = value;
+                _textInput = value;
                 OnPropertyChanged("TextInput");
             }
         }

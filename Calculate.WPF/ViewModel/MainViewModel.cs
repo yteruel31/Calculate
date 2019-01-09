@@ -105,10 +105,10 @@ namespace Calculate.WPF.ViewModel
 
         private void OperationToFormula(object obj)
         {
-            if (TextModel.TextInput.EndsWith("+") ||
-                TextModel.TextInput.EndsWith("-") ||
-                TextModel.TextInput.EndsWith("*") ||
-                TextModel.TextInput.EndsWith("/"))
+            if (TextModel.TextInput.EndsWith(OperationModel.Addition.Value) ||
+                TextModel.TextInput.EndsWith(OperationModel.Substract.Value) ||
+                TextModel.TextInput.EndsWith(OperationModel.Multiply.Value) ||
+                TextModel.TextInput.EndsWith(OperationModel.Divide.Value))
             {
                 TextModel.TextInput = TextModel.TextInput.Remove(TextModel.TextInput.Length - 1);
             }
