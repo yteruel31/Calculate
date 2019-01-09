@@ -57,11 +57,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Calculate\Calculate.WPF.csproj">
+    <ProjectReference Include="..\Calculate.WPF\Calculate.WPF.csproj">
       <Project>{1eaa3cb8-3091-4711-b5c4-66fcbe0aac04}</Project>
       <Name>Calculate.WPF</Name>
     </ProjectReference>
-    <ProjectReference Include="CalculateLib\Calculate.Lib.csproj">
+    <ProjectReference Include="Calculate.Lib\Calculate.Lib.csproj">
       <Project>{1ddcf52b-0c47-4201-a644-b998260fb16d}</Project>
       <Name>Calculate.Lib</Name>
     </ProjectReference>
