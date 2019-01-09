@@ -36,9 +36,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
-        <ItemsControl ItemsSource="{Binding Buttons}" 
-                      Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Column="1" Grid.Row="4" FlowDirection="RightToLeft"
-                      Background="Yellow">
+        <ItemsControl ItemsSource="{Binding NumericButtons}" 
+                      Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Column="1" Grid.Row="4" FlowDirection="RightToLeft">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="3" IsItemsHost="True" />
@@ -51,12 +50,22 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <ItemsControl ItemsSource="{Binding OperationButtons}" 
+                      Grid.RowSpan="4" Grid.Column="4" Grid.Row="4">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1" IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button FontFamily="Exo 2" Command="{Binding Path=DataContext.OperationToFormulaCommand, ElementName=Window}" 
+                            CommandParameter="{Binding}" Content="{Binding}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <Button FontFamily="Exo 2" Command="{Binding NumberToFormulaCommand}" CommandParameter="0" Grid.Row="7" Grid.Column="1"
                 Grid.ColumnSpan="2">0</Button>
-        <Button FontFamily="Exo 2" Command="{Binding OperationToFormulaCommand}" CommandParameter="+" Grid.Row="4" Grid.Column="4">+</Button>
-        <Button FontFamily="Exo 2" Command="{Binding OperationToFormulaCommand}" CommandParameter="-" Grid.Row="5" Grid.Column="4" >-</Button>
-        <Button FontFamily="Exo 2" Command="{Binding OperationToFormulaCommand}" CommandParameter="*" Grid.Row="6" Grid.Column="4" >*</Button>
-        <Button FontFamily="Exo 2" Command="{Binding OperationToFormulaCommand}" CommandParameter="/" Grid.Row="7" Grid.Column="4" >/</Button>
         <Button FontFamily="Exo 2" Command="{Binding NumberToFormulaCommand}" CommandParameter="," Grid.Row="7" Grid.Column="3" >,</Button>
         <Button FontFamily="Exo 2" Command="{Binding DeleteCommand}" Grid.Row="3" Grid.Column="1" >&lt;-</Button>
         <Button FontFamily="Exo 2" Command="{Binding DeleteAllCommand}" Grid.Row="3" Grid.Column="2" >C</Button>

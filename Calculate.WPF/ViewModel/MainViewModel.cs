@@ -23,7 +23,8 @@ namespace Calculate.WPF.ViewModel
             ListButtons();
         }
 
-        public ObservableCollection<string> Buttons { get; set; }
+        public ObservableCollection<string> NumericButtons { get; set; }
+        public ObservableCollection<string> OperationButtons { get; set; }
 
         public ICommand DeleteAllCommand { get; }
 
@@ -84,10 +85,18 @@ namespace Calculate.WPF.ViewModel
 
         private void ListButtons()
         {
-            Buttons = new ObservableCollection<string>()
+            NumericButtons = new ObservableCollection<string>()
             {
                 "9", "8", "7", "6", "5", "4", "3", "2", "1"
             };
+            OperationButtons = new ObservableCollection<string>()
+            {
+                OperationModel.Addition.Value, 
+                OperationModel.Substract.Value,
+                OperationModel.Multiply.Value,
+                OperationModel.Divide.Value
+            };
+
         }
 
         private void NumberToFormula(object obj)
