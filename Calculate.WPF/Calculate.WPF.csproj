@@ -73,14 +73,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\ItemModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Model\TextInputModel.cs" />
     <Compile Include="Repository\IItemRepository.cs" />
     <Compile Include="Repository\ItemRepository.cs" />
     <Compile Include="Utility\CustomCommand.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\Converters\FontSizeConverter.cs" />
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>

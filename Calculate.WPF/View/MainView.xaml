@@ -1,4 +1,4 @@
-<Controls:MetroWindow x:Class="Calculate.WPF.View.MainView"
+﻿<Controls:MetroWindow x:Class="Calculate.WPF.View.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,14 +6,14 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:viewmodels="clr-namespace:Calculate.WPF.ViewModel"
-        Title="Calculatrice" Height="350" Width="270" ResizeMode="CanResize" WindowStyle="None"
+        xmlns:converters="clr-namespace:Calculate.WPF.View.Converters"
         Title="Calculatrice" Height="350" Width="270" ResizeMode="CanResize" WindowStyle="ToolWindow"
         DataContext="{Binding Source={StaticResource MainViewModelLocator}, Path=MainViewModel}"
-        d:DataContext="{d:DesignInstance viewmodels:MainViewModel}"
-        AllowsTransparency="True" Background="#FF93B7F3" MouseDown="Window_MouseDown"
+        d:DataContext="{d:DesignInstance viewmodels:MainViewModel}" Name="Window" MinHeight="300" MinWidth="200"
         mc:Ignorable="d">
 
     <Window.Resources>
+        <converters:FontSizeConverter x:Key="FontSizeConverter"></converters:FontSizeConverter>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -64,7 +64,9 @@
                 Grid.ColumnSpan="4" >=</Button>
         <Button FontFamily="Exo 2" Command="{Binding ParenthesisToFormulaCommand}" CommandParameter="(" Grid.Row="3" Grid.Column="3" >(</Button>
         <Button FontFamily="Exo 2" Command="{Binding ParenthesisToFormulaCommand}" CommandParameter=")" Grid.Row="3" Grid.Column="4" >)</Button>
-        <TextBox x:Name="TextInput" Text="{Binding TextModel.TextInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="48" FontFamily="Exo 2" Grid.Row="1"
+        <TextBox x:Name="TextInput" Text="{Binding TextModel.TextInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                 FontSize="{Binding Converter={StaticResource FontSizeConverter}, RelativeSource={RelativeSource Mode=Self}, Path=ActualWidth}" 
+                 FontFamily="Exo 2" Grid.Row="1"
                  Grid.RowSpan="2"
                  Grid.Column="1" Grid.ColumnSpan="4" Background="White" VerticalAlignment="Center" />
     </Grid>
