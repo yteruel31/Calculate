@@ -1,10 +1,9 @@
-﻿using System;
 using Calculate.Lib.Operands;
-using Calculate.WPF.Model;
+using Calculate.Model;
 using Calculate.WPF.Utility;
-using System.Windows;
+using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Windows.Interop;
 
 namespace Calculate.WPF.ViewModel
 {
@@ -15,24 +14,22 @@ namespace Calculate.WPF.ViewModel
             TextModel = new TextInputModel();
 
             EqualCommand = new CustomCommand(EqualFormula, CanInteract);
-            MinimizedWindowsCommand = new CustomCommand(ReduceWindows, CanInteract);
             DeleteCommand = new CustomCommand(DeleteFormula, CanInteract);
             DeleteAllCommand = new CustomCommand(DeleteAllFormula, CanInteract);
-            CloseWindowsCommand = new CustomCommand(CloseWindows, CanInteract);
             OperationToFormulaCommand = new CustomCommand(OperationToFormula, CanInteract);
             NumberToFormulaCommand = new CustomCommand(NumberToFormula, CanInteract);
-            ParenthesisToFormulaCommand = new CustomCommand(ParenthesisToFormula, CanInteract);
+            ParenthesisToFormulaCommand = new CustomCommand(ParenthesisToFormula, CanParenthesisToFormula);
+
+            ListButtons();
         }
 
-        public ICommand CloseWindowsCommand { get; }
+        public ObservableCollection<string> Buttons { get; set; }
 
         public ICommand DeleteAllCommand { get; }
 
         public ICommand DeleteCommand { get; }
 
         public ICommand EqualCommand { get; }
-
-        public ICommand MinimizedWindowsCommand { get; }
 
         public ICommand NumberToFormulaCommand { get; }
 
@@ -83,14 +80,22 @@ namespace Calculate.WPF.ViewModel
             }
             catch (NullReferenceException e)
             {
-                MessageBox.Show(e.ToString());
+                //MessageBox.Show(e.ToString());
                 TextModel.TextInput = "";
             }
             catch (DivideByZeroException e)
             {
-                MessageBox.Show("Impossible de Div par 0");
+                //MessageBox.Show("Impossible de Div par 0");
                 TextModel.TextInput = "";
             }
+        }
+
+        private void ListButtons()
+        {
+            Buttons = new ObservableCollection<string>()
+            {
+                "9", "8", "7", "6", "5", "4", "3", "2", "1"
+            };
         }
 
         private void NumberToFormula(object obj)
