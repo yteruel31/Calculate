@@ -1,4 +1,4 @@
-using Calculate.Lib.Operands;
+﻿using Calculate.Lib.Operands;
 using Calculate.Model;
 using Calculate.WPF.Utility;
 using System;
@@ -39,26 +39,18 @@ namespace Calculate.WPF.ViewModel
 
         public TextInputModel TextModel { get; set; }
 
-        private static void ReduceWindows(object obj)
-        {
-            if (Application.Current.MainWindow != null && Application.Current.MainWindow.WindowState == WindowState.Normal)
-            {
-                Application.Current.MainWindow.WindowState = WindowState.Minimized;
-            }
-            if (Application.Current.MainWindow != null && Application.Current.MainWindow.WindowState == WindowState.Minimized)
-            {
-                Application.Current.MainWindow.WindowState = WindowState.Normal;
-            }
-        }
-
         private bool CanInteract(object obj)
         {
             return true;
         }
 
-        private void CloseWindows(object obj)
+        private bool CanParenthesisToFormula(object obj)
         {
-            if (Application.Current.MainWindow != null) Application.Current.MainWindow.Close();
+            if (TextModel.TextInput == null && obj.ToString() == ")")
+            {
+                return false;
+            }
+            return true;
         }
 
         private void DeleteAllFormula(object obj)
@@ -119,6 +111,10 @@ namespace Calculate.WPF.ViewModel
         private void ParenthesisToFormula(object obj)
         {
             TextModel.TextInput = TextModel.TextInput + obj;
+            if (TextModel.TextInput.Equals("()"))
+            {
+                TextModel.TextInput = TextModel.TextInput.Insert(1, "0");
+            }
         }
     }
 }
