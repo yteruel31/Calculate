@@ -7,7 +7,12 @@
         <ResourceDictionary>
             <local:ViewModelLocator x:Key="MainViewModelLocator"></local:ViewModelLocator>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="View/GenericView.xaml" />
+                <!--<ResourceDictionary Source="View/GenericView.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cobalt.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
