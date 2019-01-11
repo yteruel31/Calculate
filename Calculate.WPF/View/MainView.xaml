@@ -66,7 +66,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
-        <ItemsControl ItemsSource="{Binding NumericButtons}" 
+        <ItemsControl ItemsSource="{Binding NumericButtons}"
                       Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Column="1" Grid.Row="4" FlowDirection="RightToLeft">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -75,12 +75,12 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button FontFamily="Exo 2" Command="{Binding Path=DataContext.NumberToFormulaCommand, ElementName=Window}" 
-                            CommandParameter="{Binding}" Content="{Binding}"/>
+                    <Button Command="{Binding Path=DataContext.NumberToFormulaCommand, ElementName=Window}"
+                            CommandParameter="{Binding}" Content="{Binding}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <ItemsControl ItemsSource="{Binding OperationButtons}" 
+        <ItemsControl ItemsSource="{Binding OperationButtons}"
                       Grid.RowSpan="4" Grid.Column="4" Grid.Row="4">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -89,24 +89,25 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button FontFamily="Exo 2" Command="{Binding Path=DataContext.OperationToFormulaCommand, ElementName=Window}" 
-                            CommandParameter="{Binding}" Content="{Binding}"/>
+                    <Button Command="{Binding Path=DataContext.OperationToFormulaCommand, ElementName=Window}"
+                            CommandParameter="{Binding}" Content="{Binding}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Button FontFamily="Exo 2" Command="{Binding NumberToFormulaCommand}" CommandParameter="0" Grid.Row="7" Grid.Column="1"
+        <Button Command="{Binding NumberToFormulaCommand}" CommandParameter="0" Grid.Row="7" Grid.Column="1"
                 Grid.ColumnSpan="2">0</Button>
-        <Button FontFamily="Exo 2" Command="{Binding NumberToFormulaCommand}" CommandParameter="," Grid.Row="7" Grid.Column="3" >,</Button>
-        <Button FontFamily="Exo 2" Command="{Binding DeleteCommand}" Grid.Row="3" Grid.Column="1" >&lt;-</Button>
-        <Button FontFamily="Exo 2" Command="{Binding DeleteAllCommand}" Grid.Row="3" Grid.Column="2" >C</Button>
-        <Button FontFamily="Exo 2" Command="{Binding EqualCommand}" Grid.Row="8" Grid.Column="1"
+        <Button Command="{Binding NumberToFormulaCommand}" CommandParameter="," Grid.Row="7" Grid.Column="3" >,</Button>
+        <Button Command="{Binding DeleteCommand}" Grid.Row="3" Grid.Column="1" >&lt;-</Button>
+        <Button Command="{Binding DeleteAllCommand}" Grid.Row="3" Grid.Column="2" >C</Button>
+        <Button Command="{Binding EqualCommand}" Grid.Row="8" Grid.Column="1"
                 Grid.ColumnSpan="4" >=</Button>
-        <Button FontFamily="Exo 2" Command="{Binding ParenthesisToFormulaCommand}" CommandParameter="(" Grid.Row="3" Grid.Column="3" >(</Button>
-        <Button FontFamily="Exo 2" Command="{Binding ParenthesisToFormulaCommand}" CommandParameter=")" Grid.Row="3" Grid.Column="4" >)</Button>
-        <TextBox x:Name="TextInput" Text="{Binding TextModel.TextInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 FontSize="{Binding Converter={StaticResource FontSizeConverter}, RelativeSource={RelativeSource Mode=Self}, Path=ActualWidth}" 
-                 FontFamily="Exo 2" Grid.Row="1"
+        <Button Command="{Binding ParenthesisToFormulaCommand}" CommandParameter="(" Grid.Row="3" Grid.Column="3" >(</Button>
+        <Button Command="{Binding ParenthesisToFormulaCommand}" CommandParameter=")" Grid.Row="3" Grid.Column="4" >)</Button>
+        <TextBox Text="{Binding TextModel.TextInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 x:Name="TextBox"
+                 FontSize="{Binding Converter={StaticResource FontSizeConverter}, RelativeSource={RelativeSource Mode=Self}, Path=ActualWidth}"
+                 Grid.Row="1"
                  Grid.RowSpan="2"
                  Grid.Column="1" Grid.ColumnSpan="4" Background="White" VerticalAlignment="Center" />
     </Grid>
-</Controls:MetroWindow>
+</controls:MetroWindow>
