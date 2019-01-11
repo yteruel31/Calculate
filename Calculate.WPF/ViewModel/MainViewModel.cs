@@ -1,4 +1,4 @@
-﻿using Calculate.Lib.Operands;
+using Calculate.Lib.Operands;
 using Calculate.Model;
 using Calculate.WPF.Utility;
 using System;
@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Calculate.WPF.ViewModel
 {
-    public class MainViewModel
+    public class MainViewModel : ViewModelBase
     {
         public MainViewModel()
         {
