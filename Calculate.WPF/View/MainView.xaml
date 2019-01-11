@@ -1,4 +1,4 @@
-﻿<Controls:MetroWindow x:Class="Calculate.WPF.View.MainView"
+<controls:MetroWindow x:Class="Calculate.WPF.View.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,13 +9,20 @@
         xmlns:converters="clr-namespace:Calculate.WPF.View.Converters"
         Title="Calculatrice" Height="350" Width="270" ResizeMode="CanResize" WindowStyle="ToolWindow"
         DataContext="{Binding Source={StaticResource MainViewModelLocator}, Path=MainViewModel}"
-        d:DataContext="{d:DesignInstance viewmodels:MainViewModel}" Name="Window" MinHeight="300" MinWidth="200"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}" Name="Window" MinHeight="300" MinWidth="200"
         mc:Ignorable="d">
 
     <Window.Resources>
         <converters:FontSizeConverter x:Key="FontSizeConverter"></converters:FontSizeConverter>
     </Window.Resources>
-    <Grid>
+                <Grid>
+                    <DataGrid ItemsSource="{Binding Formulas}"
+                              SelectedItem="{Binding SelectedFormula, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                              IsReadOnly="True"
+                              AutoGenerateColumns="False"
+                              CurrentCell="{Binding CellInfo, Mode=OneWayToSource}"
+                              >
+                    </DataGrid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*" />

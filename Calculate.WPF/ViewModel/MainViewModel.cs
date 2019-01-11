@@ -1,5 +1,7 @@
 using Calculate.Lib.Operands;
 using Calculate.Model;
+using Calculate.WPF.Extensions;
+using Calculate.WPF.Services;
 using Calculate.WPF.Utility;
 using System;
 using System.Collections.ObjectModel;
@@ -9,8 +11,14 @@ namespace Calculate.WPF.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        public MainViewModel()
+        private DataGridCellInfo _cellInfo;
+        private ObservableCollection<Formula> _formulas;
+        private IFormulaDataService formulaDataService;
+
+        public MainViewModel(IFormulaDataService formulaDataService)
         {
+            this.formulaDataService = formulaDataService;
+
             TextModel = new TextInputModel();
 
             EqualCommand = new CustomCommand(EqualFormula, CanInteract);
@@ -40,6 +48,15 @@ namespace Calculate.WPF.ViewModel
 
         public TextInputModel TextModel { get; set; }
 
+        private bool CanEqual(object obj)
+        {
+            if (TextModel.TextInput == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
         private bool CanInteract(object obj)
         {
             return true;
@@ -66,20 +83,28 @@ namespace Calculate.WPF.ViewModel
 
         private void EqualFormula(object obj)
         {
-            OperandBase operand = OperandFactory.Create(TextModel.TextInput);
             try
             {
-                TextModel.TextInput = operand.Calculate().ToString();
+                OperandBase operand = OperandFactory.Create(TextModel.TextInput);
+                string result = operand.Calculate().ToString();
+                Formula formula = new Formula()
+                {
+                    FormulaContent = TextModel.TextInput,
+                    Result = result
+                };
+                _formulas.Add(formula);
+                TextModel.TextInput = result;
             }
             catch (NullReferenceException e)
             {
-                //MessageBox.Show(e.ToString());
-                TextModel.TextInput = "";
+                MessageBox.Show(e.ToString());
+
+                TextModel.TextInput = null;
             }
             catch (DivideByZeroException e)
             {
-                //MessageBox.Show("Impossible de Div par 0");
-                TextModel.TextInput = "";
+                MessageBox.Show("Impossible de Div par 0");
+                TextModel.TextInput = null;
             }
         }
 
@@ -97,6 +122,9 @@ namespace Calculate.WPF.ViewModel
                 OperationModel.Divide.Value
             };
 
+        private void LoadData()
+        {
+            Formulas = formulaDataService.GetAllFormulas().ToObservableCollection();
         }
 
         private void NumberToFormula(object obj)

@@ -41,6 +41,9 @@
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Calculate.Console\packages\MahApps.Metro.1.6.5\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Material, Version=2.3.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Calculate.Console\packages\MahApps.Metro.IconPacks.Material.2.3.0\lib\net46\MahApps.Metro.IconPacks.Material.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -64,10 +67,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\GenericView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -76,10 +75,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Extensions\ListExtension.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Services\FormulaDataService.cs" />
+    <Compile Include="Services\IFormulaDataService.cs" />
     <Compile Include="Utility\CustomCommand.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\Converters\FontSizeConverter.cs" />
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -117,6 +120,10 @@
     <ProjectReference Include="..\Calculate.Console\Calculate.Lib\Calculate.Lib.csproj">
       <Project>{1ddcf52b-0c47-4201-a644-b998260fb16d}</Project>
       <Name>Calculate.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Calculate.DAL\Calculate.DAL.csproj">
+      <Project>{cd88a520-8575-4d79-b84b-f85aea3f3516}</Project>
+      <Name>Calculate.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Calculate.Model\Calculate.Model.csproj">
       <Project>{6b2132a1-1634-45ff-8749-15d359b5a534}</Project>

@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Calculate.Lib.Operands;
+using Calculate.WPF.ViewModel;
 using MahApps.Metro.Controls;
 
 namespace Calculate.WPF.View
@@ -26,7 +27,7 @@ namespace Calculate.WPF.View
     {
         public MainView()
         {
-            DataContext = this;
+            this.DataContext = this;
             InitializeComponent();
         }
     }
