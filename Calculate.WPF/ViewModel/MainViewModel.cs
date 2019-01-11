@@ -5,6 +5,8 @@ using Calculate.WPF.Services;
 using Calculate.WPF.Utility;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Calculate.WPF.ViewModel
@@ -13,6 +15,7 @@ namespace Calculate.WPF.ViewModel
     {
         private DataGridCellInfo _cellInfo;
         private ObservableCollection<Formula> _formulas;
+        private bool _isOpenHistory;
         private IFormulaDataService formulaDataService;
 
         public MainViewModel(IFormulaDataService formulaDataService)
@@ -21,7 +24,9 @@ namespace Calculate.WPF.ViewModel
 
             TextModel = new TextInputModel();
 
-            EqualCommand = new CustomCommand(EqualFormula, CanInteract);
+            DataGridRowDCCommand = new CustomCommand(DataGridRowDC, CanInteract);
+            OpenFlyoutCommand = new CustomCommand(OpenFlyout, CanInteract);
+            EqualCommand = new CustomCommand(EqualFormula, CanEqual);
             DeleteCommand = new CustomCommand(DeleteFormula, CanInteract);
             DeleteAllCommand = new CustomCommand(DeleteAllFormula, CanInteract);
             OperationToFormulaCommand = new CustomCommand(OperationToFormula, CanInteract);
@@ -29,10 +34,21 @@ namespace Calculate.WPF.ViewModel
             ParenthesisToFormulaCommand = new CustomCommand(ParenthesisToFormula, CanParenthesisToFormula);
 
             ListButtons();
+            LoadData();
         }
 
-        public ObservableCollection<string> NumericButtons { get; set; }
-        public ObservableCollection<string> OperationButtons { get; set; }
+        public DataGridCellInfo CellInfo
+        {
+            get { return _cellInfo; }
+            set
+            {
+                _cellInfo = value;
+                SelectedFormula = _cellInfo.Item as Formula;
+                OnPropertyChanged("CellInfo");
+            }
+        }
+
+        public ICommand DataGridRowDCCommand { get; set; }
 
         public ICommand DeleteAllCommand { get; }
 
@@ -40,11 +56,39 @@ namespace Calculate.WPF.ViewModel
 
         public ICommand EqualCommand { get; }
 
+        public ObservableCollection<Formula> Formulas
+        {
+            get { return _formulas; }
+            set
+            {
+                _formulas = value;
+                OnPropertyChanged("Formulas");
+            }
+        }
+
+        public bool IsOpenHistory
+        {
+            get { return _isOpenHistory; }
+            set
+            {
+                _isOpenHistory = value;
+                OnPropertyChanged("IsOpenHistory");
+            }
+        }
+
         public ICommand NumberToFormulaCommand { get; }
+
+        public ObservableCollection<string> NumericButtons { get; set; }
+
+        public ICommand OpenFlyoutCommand { get; set; }
+
+        public ObservableCollection<string> OperationButtons { get; set; }
 
         public ICommand OperationToFormulaCommand { get; }
 
         public ICommand ParenthesisToFormulaCommand { get; }
+
+        public Formula SelectedFormula { get; set; }
 
         public TextInputModel TextModel { get; set; }
 
@@ -57,6 +101,7 @@ namespace Calculate.WPF.ViewModel
 
             return true;
         }
+
         private bool CanInteract(object obj)
         {
             return true;
@@ -68,7 +113,13 @@ namespace Calculate.WPF.ViewModel
             {
                 return false;
             }
+
             return true;
+        }
+
+        private void DataGridRowDC(object obj)
+        {
+            TextModel.TextInput = SelectedFormula.FormulaContent;
         }
 
         private void DeleteAllFormula(object obj)
@@ -130,6 +181,14 @@ namespace Calculate.WPF.ViewModel
         private void NumberToFormula(object obj)
         {
             TextModel.TextInput = TextModel.TextInput + obj;
+        }
+
+        private void OpenFlyout(object obj)
+        {
+            if (IsOpenHistory == false)
+            {
+                IsOpenHistory = true;
+            }
         }
 
         private void OperationToFormula(object obj)

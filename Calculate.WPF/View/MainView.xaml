@@ -3,18 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:iconPacks="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Material"
         xmlns:viewmodels="clr-namespace:Calculate.WPF.ViewModel"
         xmlns:converters="clr-namespace:Calculate.WPF.View.Converters"
         Title="Calculatrice" Height="350" Width="270" ResizeMode="CanResize" WindowStyle="ToolWindow"
         DataContext="{Binding Source={StaticResource MainViewModelLocator}, Path=MainViewModel}"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}" Name="Window" MinHeight="300" MinWidth="200"
         mc:Ignorable="d">
-
     <Window.Resources>
         <converters:FontSizeConverter x:Key="FontSizeConverter"></converters:FontSizeConverter>
     </Window.Resources>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Command="{Binding OpenFlyoutCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="History" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout IsOpen="{Binding IsOpenHistory}" Header="Historique" Position="Right" Theme="Adapt">
                 <Grid>
                     <DataGrid ItemsSource="{Binding Formulas}"
                               SelectedItem="{Binding SelectedFormula, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -22,7 +33,19 @@
                               AutoGenerateColumns="False"
                               CurrentCell="{Binding CellInfo, Mode=OneWayToSource}"
                               >
+                        <DataGrid.InputBindings>
+                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataGridRowDCCommand}"></MouseBinding>
+                        </DataGrid.InputBindings>
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Header="Formule" Binding="{Binding FormulaContent}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Résultat" Binding="{Binding Result}"></DataGridTextColumn>
+                        </DataGrid.Columns>
                     </DataGrid>
+                </Grid>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="*" />
