@@ -19,7 +19,6 @@ namespace Calculate.Console
 
                 OperandBase operand = OperandFactory.Create(inputString);
 
-
                 System.Console.WriteLine(operand.Calculate());
             }
         }

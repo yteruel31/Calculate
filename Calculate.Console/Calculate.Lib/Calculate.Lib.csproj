@@ -51,5 +51,12 @@
     <Compile Include="Operands\OperandValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Calculate.Model\Calculate.Model.csproj">
+      <Project>{6b2132a1-1634-45ff-8749-15d359b5a534}</Project>
+      <Name>Calculate.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

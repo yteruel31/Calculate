@@ -5,9 +5,8 @@
              StartupUri="View/MainView.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <local:ViewModelLocator x:Key="MainViewModelLocator"></local:ViewModelLocator>
+            <local:ViewModelLocator x:Key="MainViewModelLocator" />
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="View/GenericView.xaml" />-->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />

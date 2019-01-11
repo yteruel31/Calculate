@@ -1,4 +1,4 @@
-using Calculate.Lib.Operands;
+﻿using Calculate.Lib.Operands;
 using Calculate.Model;
 using Calculate.WPF.Extensions;
 using Calculate.WPF.Services;
@@ -124,7 +124,7 @@ namespace Calculate.WPF.ViewModel
 
         private void DeleteAllFormula(object obj)
         {
-            TextModel.TextInput = "";
+            TextModel.TextInput = null;
         }
 
         private void DeleteFormula(object obj)
@@ -167,11 +167,12 @@ namespace Calculate.WPF.ViewModel
             };
             OperationButtons = new ObservableCollection<string>()
             {
-                OperationModel.Addition.Value, 
+                OperationModel.Addition.Value,
                 OperationModel.Substract.Value,
                 OperationModel.Multiply.Value,
                 OperationModel.Divide.Value
             };
+        }
 
         private void LoadData()
         {
