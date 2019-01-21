@@ -1,4 +1,4 @@
-﻿using Calculate.Lib.Operands;
+using Calculate.Lib.Operands;
 using Calculate.Model;
 using Calculate.WPF.Extensions;
 using Calculate.WPF.Services;
@@ -36,6 +36,8 @@ namespace Calculate.WPF.ViewModel
             ListButtons();
             LoadData();
         }
+
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public DataGridCellInfo CellInfo
         {
@@ -143,18 +145,20 @@ namespace Calculate.WPF.ViewModel
                     FormulaContent = TextModel.TextInput,
                     Result = result
                 };
+                logger.Info("L'opération utilisée est : {Formula} = {Result}", TextModel.TextInput, result);
                 _formulas.Add(formula);
                 TextModel.TextInput = result;
             }
             catch (NullReferenceException e)
             {
-                MessageBox.Show(e.ToString());
-
+                logger.Debug(e);
+                await _dialogCoordinator.ShowMessageAsync(this, "Erreur", e.ToString());
                 TextModel.TextInput = null;
             }
             catch (DivideByZeroException e)
             {
-                MessageBox.Show("Impossible de Div par 0");
+                logger.Error(e,"Impossible de Div par 0");
+                await _dialogCoordinator.ShowMessageAsync(this, "Erreur", "Impossible de diviser par 0");
                 TextModel.TextInput = null;
             }
         }
