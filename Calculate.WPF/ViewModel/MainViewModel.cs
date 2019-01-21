@@ -1,11 +1,11 @@
-using Calculate.Lib.Operands;
+﻿using Calculate.Lib.Operands;
 using Calculate.Model;
 using Calculate.WPF.Extensions;
 using Calculate.WPF.Services;
 using Calculate.WPF.Utility;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -18,13 +18,16 @@ namespace Calculate.WPF.ViewModel
         private bool _isOpenHistory;
         private IFormulaDataService formulaDataService;
 
-        public MainViewModel(IFormulaDataService formulaDataService)
+        private readonly IDialogCoordinator _dialogCoordinator;
+
+        public MainViewModel(IFormulaDataService formulaDataService, IDialogCoordinator dialogCoordinator)
         {
             this.formulaDataService = formulaDataService;
+            _dialogCoordinator = dialogCoordinator;
 
             TextModel = new TextInputModel();
 
-            DataGridRowDCCommand = new CustomCommand(DataGridRowDC, CanInteract);
+            DataGridRowDcCommand = new CustomCommand(DataGridRowDC, CanInteract);
             OpenFlyoutCommand = new CustomCommand(OpenFlyout, CanInteract);
             EqualCommand = new CustomCommand(EqualFormula, CanEqual);
             DeleteCommand = new CustomCommand(DeleteFormula, CanInteract);
@@ -50,7 +53,7 @@ namespace Calculate.WPF.ViewModel
             }
         }
 
-        public ICommand DataGridRowDCCommand { get; set; }
+        public ICommand DataGridRowDcCommand { get; set; }
 
         public ICommand DeleteAllCommand { get; }
 
@@ -134,7 +137,7 @@ namespace Calculate.WPF.ViewModel
             TextModel.TextInput = TextModel.TextInput.Remove(TextModel.TextInput.Length - 1);
         }
 
-        private void EqualFormula(object obj)
+        private async void EqualFormula(object obj)
         {
             try
             {

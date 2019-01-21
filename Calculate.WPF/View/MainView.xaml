@@ -1,4 +1,4 @@
-<controls:MetroWindow x:Class="Calculate.WPF.View.MainView"
+﻿<controls:MetroWindow x:Class="Calculate.WPF.View.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,6 +8,12 @@
         xmlns:viewmodels="clr-namespace:Calculate.WPF.ViewModel"
         xmlns:converters="clr-namespace:Calculate.WPF.View.Converters"
         xmlns:utility="clr-namespace:Calculate.WPF.Utility"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
+        Title="Calculatrice" Height="350" Width="270" 
+        ResizeMode="CanResize" 
+        WindowStyle="ToolWindow" 
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding Source={StaticResource MainViewModelLocator}, Path=MainViewModel}"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}" Name="Window" MinHeight="300" MinWidth="200"
         mc:Ignorable="d">
@@ -34,7 +40,7 @@
                               CurrentCell="{Binding CellInfo, Mode=OneWayToSource}"
                               >
                         <DataGrid.InputBindings>
-                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataGridRowDCCommand}"></MouseBinding>
+                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataGridRowDcCommand}"></MouseBinding>
                         </DataGrid.InputBindings>
                         <DataGrid.Columns >
                             <DataGridTextColumn Header="Formule" Binding="{Binding FormulaContent}"></DataGridTextColumn>

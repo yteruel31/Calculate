@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using Calculate.Lib.Operands;
 using Calculate.WPF.ViewModel;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace Calculate.WPF.View
 {
@@ -27,7 +28,7 @@ namespace Calculate.WPF.View
     {
         public MainView()
         {
-            this.DataContext = this;
+            DataContext = this;
             InitializeComponent();
         }
     }
