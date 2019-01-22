@@ -22,7 +22,7 @@
     </Window.Resources>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <Button Command="{Binding OpenFlyoutCommand}">
+            <Button Command="{Binding HistoryFlyoutCommand}">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="History" />
                 </StackPanel>
@@ -31,7 +31,7 @@
     </controls:MetroWindow.RightWindowCommands>
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
-            <controls:Flyout IsOpen="{Binding IsOpenHistory}" Header="Historique" Position="Right" Theme="Adapt">
+            <controls:Flyout IsOpen="{Binding IsOpenHistoryFlyout}" Header="Historique" Position="Right" Theme="Adapt">
                 <Grid>
                     <DataGrid ItemsSource="{Binding Formulas}"
                               SelectedItem="{Binding SelectedFormula, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -40,7 +40,7 @@
                               CurrentCell="{Binding CellInfo, Mode=OneWayToSource}"
                               >
                         <DataGrid.InputBindings>
-                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataGridRowDcCommand}"></MouseBinding>
+                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding GetDataInRowCommand}"></MouseBinding>
                         </DataGrid.InputBindings>
                         <DataGrid.Columns >
                             <DataGridTextColumn Header="Formule" Binding="{Binding FormulaContent}"></DataGridTextColumn>
@@ -109,7 +109,7 @@
                 Grid.ColumnSpan="4" >=</Button>
         <Button Command="{Binding ParenthesisToFormulaCommand}" CommandParameter="(" Grid.Row="3" Grid.Column="3" >(</Button>
         <Button Command="{Binding ParenthesisToFormulaCommand}" CommandParameter=")" Grid.Row="3" Grid.Column="4" >)</Button>
-        <utility:NumericTextBox Text="{Binding TextModel.TextInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        <utility:NumericTextBox Text="{Binding TextInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  x:Name="TextBox"
                  FontSize="{Binding Converter={StaticResource FontSizeConverter}, RelativeSource={RelativeSource Mode=Self}, Path=ActualWidth}"
                  Grid.Row="1"

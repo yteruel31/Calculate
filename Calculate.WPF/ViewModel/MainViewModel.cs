@@ -15,20 +15,16 @@ namespace Calculate.WPF.ViewModel
     {
         private DataGridCellInfo _cellInfo;
         private ObservableCollection<Formula> _formulas;
-        private bool _isOpenHistory;
+        private bool _isOpenHistoryFlyout;
         private IFormulaDataService formulaDataService;
-
-        private readonly IDialogCoordinator _dialogCoordinator;
 
         public MainViewModel(IFormulaDataService formulaDataService, IDialogCoordinator dialogCoordinator)
         {
             this.formulaDataService = formulaDataService;
             _dialogCoordinator = dialogCoordinator;
 
-            TextModel = new TextInputModel();
-
-            DataGridRowDcCommand = new CustomCommand(DataGridRowDC, CanInteract);
-            OpenFlyoutCommand = new CustomCommand(OpenFlyout, CanInteract);
+            GetDataInRowCommand = new CustomCommand(GetDataInRow, CanInteract);
+            HistoryFlyoutCommand = new CustomCommand(HistoryFlyout, CanInteract);
             EqualCommand = new CustomCommand(EqualFormula, CanEqual);
             DeleteCommand = new CustomCommand(DeleteFormula, CanInteract);
             DeleteAllCommand = new CustomCommand(DeleteAllFormula, CanInteract);
@@ -53,7 +49,7 @@ namespace Calculate.WPF.ViewModel
             }
         }
 
-        public ICommand DataGridRowDcCommand { get; set; }
+        public ICommand GetDataInRowCommand { get; set; }
 
         public ICommand DeleteAllCommand { get; }
 
@@ -71,13 +67,13 @@ namespace Calculate.WPF.ViewModel
             }
         }
 
-        public bool IsOpenHistory
+        public bool IsOpenHistoryFlyout
         {
-            get { return _isOpenHistory; }
+            get { return _isOpenHistoryFlyout; }
             set
             {
-                _isOpenHistory = value;
-                OnPropertyChanged("IsOpenHistory");
+                _isOpenHistoryFlyout = value;
+                OnPropertyChanged("IsOpenHistoryFlyout");
             }
         }
 
@@ -85,7 +81,7 @@ namespace Calculate.WPF.ViewModel
 
         public ObservableCollection<string> NumericButtons { get; set; }
 
-        public ICommand OpenFlyoutCommand { get; set; }
+        public ICommand HistoryFlyoutCommand { get; set; }
 
         public ObservableCollection<string> OperationButtons { get; set; }
 
@@ -95,15 +91,24 @@ namespace Calculate.WPF.ViewModel
 
         public Formula SelectedFormula { get; set; }
 
-        public TextInputModel TextModel { get; set; }
+        private string _textInput;
+
+        public string TextInput
+        {
+            get { return _textInput; }
+            set
+            {
+                _textInput = value;
+                OnPropertyChanged("TextInput");
+            }
+        }
 
         private bool CanEqual(object obj)
         {
-            if (TextModel.TextInput == null)
+            if (TextInput == null)
             {
                 return false;
             }
-
             return true;
         }
 
@@ -114,7 +119,7 @@ namespace Calculate.WPF.ViewModel
 
         private bool CanParenthesisToFormula(object obj)
         {
-            if (TextModel.TextInput == null && obj.ToString() == ")")
+            if (TextInput == null && obj.ToString() == ")")
             {
                 return false;
             }
@@ -122,47 +127,47 @@ namespace Calculate.WPF.ViewModel
             return true;
         }
 
-        private void DataGridRowDC(object obj)
+        private void GetDataInRow(object obj)
         {
-            TextModel.TextInput = SelectedFormula.FormulaContent;
+            TextInput = SelectedFormula.FormulaContent;
         }
 
         private void DeleteAllFormula(object obj)
         {
-            TextModel.TextInput = null;
+            TextInput = null;
         }
 
         private void DeleteFormula(object obj)
         {
-            TextModel.TextInput = TextModel.TextInput.Remove(TextModel.TextInput.Length - 1);
+            TextInput = TextInput.Remove(TextInput.Length - 1);
         }
 
         private async void EqualFormula(object obj)
         {
             try
             {
-                OperandBase operand = OperandFactory.Create(TextModel.TextInput);
+                OperandBase operand = OperandFactory.Create(TextInput);
                 string result = operand.Calculate().ToString();
                 Formula formula = new Formula()
                 {
-                    FormulaContent = TextModel.TextInput,
+                    FormulaContent = TextInput,
                     Result = result
                 };
-                logger.Info("L'opération utilisée est : {Formula} = {Result}", TextModel.TextInput, result);
+                logger.Info("L'opération utilisée est : {Formula} = {Result}", TextInput, result);
                 _formulas.Add(formula);
-                TextModel.TextInput = result;
+                TextInput = result;
             }
             catch (NullReferenceException e)
             {
                 logger.Debug(e);
                 await _dialogCoordinator.ShowMessageAsync(this, "Erreur", e.ToString());
-                TextModel.TextInput = null;
+                TextInput = null;
             }
             catch (DivideByZeroException e)
             {
                 logger.Error(e,"Impossible de Div par 0");
                 await _dialogCoordinator.ShowMessageAsync(this, "Erreur", "Impossible de diviser par 0");
-                TextModel.TextInput = null;
+                TextInput = null;
             }
         }
 
@@ -188,36 +193,36 @@ namespace Calculate.WPF.ViewModel
 
         private void NumberToFormula(object obj)
         {
-            TextModel.TextInput = TextModel.TextInput + obj;
+            TextInput = TextInput + obj;
         }
 
-        private void OpenFlyout(object obj)
+        private void HistoryFlyout(object obj)
         {
-            if (IsOpenHistory == false)
+            if (IsOpenHistoryFlyout == false)
             {
-                IsOpenHistory = true;
+                IsOpenHistoryFlyout = true;
             }
         }
 
         private void OperationToFormula(object obj)
         {
-            if (TextModel.TextInput.EndsWith(OperationModel.Addition.Value) ||
-                TextModel.TextInput.EndsWith(OperationModel.Substract.Value) ||
-                TextModel.TextInput.EndsWith(OperationModel.Multiply.Value) ||
-                TextModel.TextInput.EndsWith(OperationModel.Divide.Value))
+            if (TextInput.EndsWith(OperationModel.Addition.Value) ||
+                TextInput.EndsWith(OperationModel.Substract.Value) ||
+                TextInput.EndsWith(OperationModel.Multiply.Value) ||
+                TextInput.EndsWith(OperationModel.Divide.Value))
             {
-                TextModel.TextInput = TextModel.TextInput.Remove(TextModel.TextInput.Length - 1);
+                TextInput = TextInput.Remove(TextInput.Length - 1);
             }
 
-            TextModel.TextInput = TextModel.TextInput + obj;
+            TextInput = TextInput + obj;
         }
 
         private void ParenthesisToFormula(object obj)
         {
-            TextModel.TextInput = TextModel.TextInput + obj;
-            if (TextModel.TextInput.Equals("()"))
+            TextInput = TextInput + obj;
+            if (TextInput.Equals("()"))
             {
-                TextModel.TextInput = TextModel.TextInput.Insert(1, "0");
+                TextInput = TextInput.Insert(1, "0");
             }
         }
     }
