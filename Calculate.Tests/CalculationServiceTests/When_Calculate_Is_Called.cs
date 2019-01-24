@@ -8,15 +8,12 @@ namespace Calculate.Tests.CalculationServiceTests
     [TestFixture]
     public class When_Calculate_Is_Called
     {
+        private CalculationService _calculationService;
         [Test]
         public void Default_Case()
         {
-            // Arrange
-            CalculationService calculationService = new CalculationService();
-            // Act
-
-            // Assert
-            Assert.AreEqual(45, calculationService.Calculate(OperandFactory.Create("42+3")));
+            _calculationService = new CalculationService();
+            Assert.AreEqual(45, _calculationService.Calculate(OperandFactory.Create("42+3")));
         }
     }
 }

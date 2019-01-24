@@ -20,7 +20,7 @@ namespace Calculate.WPF.ViewModel
 
         public MainViewModel(IFormulaDataService formulaDataService, IMainViewModelService mainViewModelService, IDialogCoordinator dialogCoordinator)
         {
-            this._formulaDataService = formulaDataService;
+            _formulaDataService = formulaDataService;
             _dialogCoordinator = dialogCoordinator;
             _mainViewModelService = mainViewModelService;
 
