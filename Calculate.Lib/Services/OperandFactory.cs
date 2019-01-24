@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using Calculate.Lib.Operands;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 
-namespace Calculate.Lib.Operands
+namespace Calculate.Lib.Services
 {
     public static class OperandFactory
     {
-        private static Regex GetGroupsRegex =
+        private static readonly Regex GetGroupsRegex =
             new Regex(@"(?=(\((?>[^()]+|(?<o>)\(|(?<-o>)\))*(?(o)(?!)|)\)))", RegexOptions.Compiled);
 
-        private static Regex OutsideParenthesisRegex =
+        private static readonly Regex OutsideParenthesisRegex =
             new Regex(@"(?<before>.+)?\((.+)?\)(?<after>.+)?", RegexOptions.Compiled);
 
-        private static Regex ParenthesisRegex = new Regex(@"\((?<content>.+)\)", RegexOptions.Compiled);
-        public static OperandBase Create(string input)
+        private static readonly Regex ParenthesisRegex = new Regex(@"\((?<content>.+)\)", RegexOptions.Compiled);
+
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+        public static OperandFunctionBase Create(string input)
         {
+            Logger.Debug($"Create({input})");
             if (HasParenthesisToRemove(input))
             {
                 return Create(GetOperationInsideParenthesisString(input));
@@ -27,7 +27,7 @@ namespace Calculate.Lib.Operands
             bool isValue = decimal.TryParse(input, out decimal outValue);
             if (isValue)
             {
-                return new OperandValue
+                return new OperandFunctionBase(OperandBase.OperandType.Value)
                 {
                     Value = outValue
                 };
@@ -37,7 +37,7 @@ namespace Calculate.Lib.Operands
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '+');
                 string rightOperand = GetRightOperandOfOperationString(input, '+');
-                return new OperandAddition()
+                return new OperandFunctionBase(OperandBase.OperandType.Addition)
                 {
                     LeftOperand = Create(leftOperand),
                     RightOperand = Create(rightOperand)
@@ -48,7 +48,7 @@ namespace Calculate.Lib.Operands
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '-');
                 string rightOperand = GetRightOperandOfOperationString(input, '-');
-                return new OperandSubstract()
+                return new OperandFunctionBase(OperandBase.OperandType.Substract)
                 {
                     LeftOperand = Create(leftOperand),
                     RightOperand = Create(rightOperand)
@@ -59,7 +59,7 @@ namespace Calculate.Lib.Operands
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '*');
                 string rightOperand = GetRightOperandOfOperationString(input, '*');
-                return new OperandMultiply()
+                return new OperandFunctionBase(OperandBase.OperandType.Multiply)
                 {
                     LeftOperand = Create(leftOperand),
                     RightOperand = Create(rightOperand)
@@ -70,7 +70,7 @@ namespace Calculate.Lib.Operands
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '/');
                 string rightOperand = GetRightOperandOfOperationString(input, '/');
-                return new OperandDivide()
+                return new OperandFunctionBase(OperandBase.OperandType.Divide)
                 {
                     LeftOperand = Create(leftOperand),
                     RightOperand = Create(rightOperand)
@@ -141,6 +141,7 @@ namespace Calculate.Lib.Operands
 
             return groups.Contains(input);
         }
+
         public static bool IsOperation(string input, string operation)
         {
             var match = OutsideParenthesisRegex.Match(input);
