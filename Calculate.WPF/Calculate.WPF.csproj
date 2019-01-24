@@ -134,13 +134,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Calculate.Console\Calculate.Lib\Calculate.Lib.csproj">
-      <Project>{1ddcf52b-0c47-4201-a644-b998260fb16d}</Project>
-      <Name>Calculate.Lib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Calculate.DAL\Calculate.DAL.csproj">
       <Project>{cd88a520-8575-4d79-b84b-f85aea3f3516}</Project>
       <Name>Calculate.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Calculate.Lib\Calculate.Lib.csproj">
+      <Project>{1ddcf52b-0c47-4201-a644-b998260fb16d}</Project>
+      <Name>Calculate.Lib</Name>
     </ProjectReference>
     <ProjectReference Include="..\Calculate.Model\Calculate.Model.csproj">
       <Project>{6b2132a1-1634-45ff-8749-15d359b5a534}</Project>
