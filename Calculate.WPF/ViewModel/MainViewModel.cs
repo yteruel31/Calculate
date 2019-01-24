@@ -1,5 +1,4 @@
-﻿using Calculate.Lib.Operands;
-using Calculate.Model;
+﻿using Calculate.Model;
 using Calculate.WPF.Extensions;
 using Calculate.WPF.Services;
 using Calculate.WPF.Utility;
@@ -14,29 +13,35 @@ namespace Calculate.WPF.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private DataGridCellInfo _cellInfo;
+
         private ObservableCollection<Formula> _formulas;
+
         private bool _isOpenHistoryFlyout;
-        private IFormulaDataService formulaDataService;
 
-        public MainViewModel(IFormulaDataService formulaDataService, IDialogCoordinator dialogCoordinator)
+        private readonly IFormulaDataService _formulaDataService;
+
+        private readonly IMainViewModelService _mainViewModelService;
+
+        public MainViewModel(IFormulaDataService formulaDataService, IMainViewModelService mainViewModelService, IDialogCoordinator dialogCoordinator)
         {
-            this.formulaDataService = formulaDataService;
+            _formulaDataService = formulaDataService;
             _dialogCoordinator = dialogCoordinator;
+            _mainViewModelService = mainViewModelService;
 
-            GetDataInRowCommand = new CustomCommand(GetDataInRow, CanInteract);
-            HistoryFlyoutCommand = new CustomCommand(HistoryFlyout, CanInteract);
-            EqualCommand = new CustomCommand(EqualFormula, CanEqual);
-            DeleteCommand = new CustomCommand(DeleteFormula, CanInteract);
-            DeleteAllCommand = new CustomCommand(DeleteAllFormula, CanInteract);
-            OperationToFormulaCommand = new CustomCommand(OperationToFormula, CanInteract);
-            NumberToFormulaCommand = new CustomCommand(NumberToFormula, CanInteract);
-            ParenthesisToFormulaCommand = new CustomCommand(ParenthesisToFormula, CanParenthesisToFormula);
+            GetDataInRowCommand = new CustomCommand(GetDataInRow, CanInteract, nameof(GetDataInRowCommand));
+            HistoryFlyoutCommand = new CustomCommand(HistoryFlyout, CanInteract, nameof(HistoryFlyoutCommand));
+            EqualCommand = new CustomCommand(EqualFormula, CanEqual, nameof(EqualCommand));
+            DeleteCommand = new CustomCommand(DeleteFormula, CanInteract, nameof(DeleteCommand));
+            DeleteAllCommand = new CustomCommand(DeleteAllFormula, CanInteract, nameof(DeleteAllCommand));
+            OperationToFormulaCommand = new CustomCommand(OperationToFormula, CanInteract, nameof(OperationToFormulaCommand));
+            NumberToFormulaCommand = new CustomCommand(NumberToFormula, CanInteract, nameof(NumberToFormulaCommand));
+            ParenthesisToFormulaCommand = new CustomCommand(ParenthesisToFormula, CanParenthesisToFormula, nameof(ParenthesisToFormulaCommand));
 
             ListButtons();
             LoadData();
         }
 
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public DataGridCellInfo CellInfo
         {
@@ -45,9 +50,11 @@ namespace Calculate.WPF.ViewModel
             {
                 _cellInfo = value;
                 SelectedFormula = _cellInfo.Item as Formula;
-                OnPropertyChanged("CellInfo");
+                OnPropertyChanged(nameof(CellInfo));
             }
         }
+
+        public Formula SelectedFormula { get; set; }
 
         public ICommand GetDataInRowCommand { get; set; }
 
@@ -63,7 +70,7 @@ namespace Calculate.WPF.ViewModel
             set
             {
                 _formulas = value;
-                OnPropertyChanged("Formulas");
+                OnPropertyChanged(nameof(Formulas));
             }
         }
 
@@ -73,7 +80,7 @@ namespace Calculate.WPF.ViewModel
             set
             {
                 _isOpenHistoryFlyout = value;
-                OnPropertyChanged("IsOpenHistoryFlyout");
+                OnPropertyChanged(nameof(IsOpenHistoryFlyout));
             }
         }
 
@@ -89,8 +96,6 @@ namespace Calculate.WPF.ViewModel
 
         public ICommand ParenthesisToFormulaCommand { get; }
 
-        public Formula SelectedFormula { get; set; }
-
         private string _textInput;
 
         public string TextInput
@@ -99,17 +104,13 @@ namespace Calculate.WPF.ViewModel
             set
             {
                 _textInput = value;
-                OnPropertyChanged("TextInput");
+                OnPropertyChanged(nameof(TextInput));
             }
         }
 
         private bool CanEqual(object obj)
         {
-            if (TextInput == null)
-            {
-                return false;
-            }
-            return true;
+            return _mainViewModelService.CanEqual(TextInput);
         }
 
         private bool CanInteract(object obj)
@@ -119,12 +120,7 @@ namespace Calculate.WPF.ViewModel
 
         private bool CanParenthesisToFormula(object obj)
         {
-            if (TextInput == null && obj.ToString() == ")")
-            {
-                return false;
-            }
-
-            return true;
+            return _mainViewModelService.CanParenthesisToFormula(obj as string, TextInput);
         }
 
         private void GetDataInRow(object obj)
@@ -139,33 +135,27 @@ namespace Calculate.WPF.ViewModel
 
         private void DeleteFormula(object obj)
         {
-            TextInput = TextInput.Remove(TextInput.Length - 1);
+            TextInput = _mainViewModelService.DeleteFormula(TextInput);
         }
 
         private async void EqualFormula(object obj)
         {
             try
             {
-                OperandBase operand = OperandFactory.Create(TextInput);
-                string result = operand.Calculate().ToString();
-                Formula formula = new Formula()
-                {
-                    FormulaContent = TextInput,
-                    Result = result
-                };
-                logger.Info("L'opération utilisée est : {Formula} = {Result}", TextInput, result);
-                _formulas.Add(formula);
-                TextInput = result;
+                Logger.Info($"L'opération utilisée est : {TextInput}");
+                _formulas.Add(_mainViewModelService.GetFormula(TextInput));
+                TextInput = _mainViewModelService.EqualFormula(TextInput);
+                Logger.Info($"Le résultat est : {_mainViewModelService.EqualFormula(TextInput)}");
             }
             catch (NullReferenceException e)
             {
-                logger.Debug(e);
+                Logger.Error(e);
                 await _dialogCoordinator.ShowMessageAsync(this, "Erreur", e.ToString());
                 TextInput = null;
             }
             catch (DivideByZeroException e)
             {
-                logger.Error(e,"Impossible de Div par 0");
+                Logger.Error(e, "Impossible de Div par 0");
                 await _dialogCoordinator.ShowMessageAsync(this, "Erreur", "Impossible de diviser par 0");
                 TextInput = null;
             }
@@ -186,14 +176,14 @@ namespace Calculate.WPF.ViewModel
             };
         }
 
-        private void LoadData()
+        public void LoadData()
         {
-            Formulas = formulaDataService.GetAllFormulas().ToObservableCollection();
+            Formulas = _formulaDataService.GetAllFormulas().ToObservableCollection();
         }
 
         private void NumberToFormula(object obj)
         {
-            TextInput = TextInput + obj;
+            TextInput = _mainViewModelService.NumberToFormula(obj as string, TextInput);
         }
 
         private void HistoryFlyout(object obj)
@@ -206,24 +196,12 @@ namespace Calculate.WPF.ViewModel
 
         private void OperationToFormula(object obj)
         {
-            if (TextInput.EndsWith(OperationModel.Addition.Value) ||
-                TextInput.EndsWith(OperationModel.Substract.Value) ||
-                TextInput.EndsWith(OperationModel.Multiply.Value) ||
-                TextInput.EndsWith(OperationModel.Divide.Value))
-            {
-                TextInput = TextInput.Remove(TextInput.Length - 1);
-            }
-
-            TextInput = TextInput + obj;
+            TextInput = _mainViewModelService.OperationToFormula(obj as string, TextInput);
         }
 
         private void ParenthesisToFormula(object obj)
         {
-            TextInput = TextInput + obj;
-            if (TextInput.Equals("()"))
-            {
-                TextInput = TextInput.Insert(1, "0");
-            }
+            TextInput = _mainViewModelService.ParenthesisToFormula(obj as string, TextInput);
         }
     }
 }
