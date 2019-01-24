@@ -1,25 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Calculate.Lib;
-using Calculate.Lib.Operands;
+﻿using Calculate.Lib.Services;
 
 namespace Calculate.Console
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             while (true)
             {
                 string inputString = System.Console.ReadLine();
 
-                OperandBase operand = OperandFactory.Create(inputString);
+                CalculationService operand = new CalculationService();
 
-                System.Console.WriteLine(operand.Calculate());
+                System.Console.WriteLine(operand.Calculate(OperandFactory.Create(inputString)));
             }
         }
     }
