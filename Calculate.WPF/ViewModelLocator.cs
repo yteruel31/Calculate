@@ -7,7 +7,8 @@ namespace Calculate.WPF
 {
     public class ViewModelLocator
     {
-        private static readonly IFormulaDataService FormulaDataService = new FormulaDataService(new FormulaRepository()); 
-        public static MainViewModel MainViewModel { get; set; } = new MainViewModel(FormulaDataService, DialogCoordinator.Instance);
+        private static readonly IFormulaDataService FormulaDataService = new FormulaDataService(new FormulaRepository());
+        private static readonly IMainViewModelService MainViewModelService = new MainViewModelService();
+        public static MainViewModel MainViewModel { get; set; } = new MainViewModel(FormulaDataService, MainViewModelService, DialogCoordinator.Instance);
     }
 }

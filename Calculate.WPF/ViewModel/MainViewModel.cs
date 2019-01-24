@@ -13,18 +13,14 @@ namespace Calculate.WPF.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private DataGridCellInfo _cellInfo;
-
         private ObservableCollection<Formula> _formulas;
-
         private bool _isOpenHistoryFlyout;
-
         private readonly IFormulaDataService _formulaDataService;
-
         private readonly IMainViewModelService _mainViewModelService;
 
         public MainViewModel(IFormulaDataService formulaDataService, IMainViewModelService mainViewModelService, IDialogCoordinator dialogCoordinator)
         {
-            _formulaDataService = formulaDataService;
+            this._formulaDataService = formulaDataService;
             _dialogCoordinator = dialogCoordinator;
             _mainViewModelService = mainViewModelService;
 
@@ -53,8 +49,6 @@ namespace Calculate.WPF.ViewModel
                 OnPropertyChanged(nameof(CellInfo));
             }
         }
-
-        public Formula SelectedFormula { get; set; }
 
         public ICommand GetDataInRowCommand { get; set; }
 
@@ -95,6 +89,8 @@ namespace Calculate.WPF.ViewModel
         public ICommand OperationToFormulaCommand { get; }
 
         public ICommand ParenthesisToFormulaCommand { get; }
+
+        public Formula SelectedFormula { get; set; }
 
         private string _textInput;
 
@@ -155,7 +151,7 @@ namespace Calculate.WPF.ViewModel
             }
             catch (DivideByZeroException e)
             {
-                Logger.Error(e, "Impossible de Div par 0");
+                Logger.Error(e,"Impossible de Div par 0");
                 await _dialogCoordinator.ShowMessageAsync(this, "Erreur", "Impossible de diviser par 0");
                 TextInput = null;
             }

@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Services\IMainViewModelService.cs" />
+    <Compile Include="Services\MainViewModelService.cs" />
     <Compile Include="Utility\NumericTextBox.cs" />
     <Page Include="View\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -92,7 +93,6 @@
     <Compile Include="Utility\CustomCommand.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="Services\MainViewModelService.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\Converters\FontSizeConverter.cs" />
     <Compile Include="View\MainView.xaml.cs">
