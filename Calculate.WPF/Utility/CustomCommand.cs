@@ -11,11 +11,15 @@ namespace Calculate.WPF.Utility
     {
         private readonly Action<object> execute;
         private readonly Predicate<object> canExecute;
+        private readonly string _nameOfCommand;
 
-        public CustomCommand(Action<object> execute, Predicate<object> canExecute)
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+        public CustomCommand(Action<object> execute, Predicate<object> canExecute, string nameOfCommand)
         {
             this.execute = execute;
             this.canExecute = canExecute;
+            _nameOfCommand = nameOfCommand;
         }
 
         public bool CanExecute(object parameter)
@@ -26,18 +30,13 @@ namespace Calculate.WPF.Utility
 
         public event EventHandler CanExecuteChanged
         {
-            add
-            {
-                CommandManager.RequerySuggested += value;
-            }
-            remove
-            {
-                CommandManager.RequerySuggested -= value;
-            }
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
 
         public void Execute(object parameter)
         {
+            Logger.Info($"Exécution de la commande {_nameOfCommand} avec le paramètre {parameter}");
             execute(parameter);
         }
     }
