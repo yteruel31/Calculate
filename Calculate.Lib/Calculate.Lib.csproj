@@ -51,7 +51,10 @@
   <ItemGroup>
     <Compile Include="Operands\OperandBase.cs" />
     <Compile Include="Operands\OperandFunctionBase.cs" />
+    <Compile Include="Operands\OperandType.cs" />
+    <Compile Include="Operands\OperandValue.cs" />
     <Compile Include="Services\CalculationService.cs" />
+    <Compile Include="Services\ICalculationService.cs" />
     <Compile Include="Services\OperandFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

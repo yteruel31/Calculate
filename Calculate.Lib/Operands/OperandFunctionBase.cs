@@ -6,7 +6,7 @@
         {
         }
 
-        public OperandFunctionBase LeftOperand { get; set; }
-        public OperandFunctionBase RightOperand { get; set; }
+        public OperandBase LeftOperand { get; set; }
+        public OperandBase RightOperand { get; set; }
     }
 }

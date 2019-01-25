@@ -2,26 +2,26 @@
 
 namespace Calculate.Lib.Services
 {
-    public class CalculationService
+    public class CalculationService : ICalculationService
     {
-        public decimal Calculate(OperandFunctionBase operand)
+        public decimal Calculate(OperandBase operand)
         {
             switch (operand.Type)
             {
-                case OperandBase.OperandType.Addition:
-                    return Calculate(operand.LeftOperand) + Calculate(operand.RightOperand);
+                case OperandType.Addition:
+                    return Calculate(((OperandFunctionBase)operand).LeftOperand) + Calculate(((OperandFunctionBase)operand).RightOperand);
 
-                case OperandBase.OperandType.Substract:
-                    return Calculate(operand.LeftOperand) - Calculate(operand.RightOperand);
+                case OperandType.Substract:
+                    return Calculate(((OperandFunctionBase)operand).LeftOperand) - Calculate(((OperandFunctionBase)operand).RightOperand);
 
-                case OperandBase.OperandType.Multiply:
-                    return Calculate(operand.LeftOperand) * Calculate(operand.RightOperand);
+                case OperandType.Multiply:
+                    return Calculate(((OperandFunctionBase)operand).LeftOperand) * Calculate(((OperandFunctionBase)operand).RightOperand);
 
-                case OperandBase.OperandType.Divide:
-                    return Calculate(operand.LeftOperand) / Calculate(operand.RightOperand);
+                case OperandType.Divide:
+                    return Calculate(((OperandFunctionBase)operand).LeftOperand) / Calculate(((OperandFunctionBase)operand).RightOperand);
 
-                case OperandBase.OperandType.Value:
-                    return operand.Value;
+                case OperandType.Value:
+                    return ((OperandValue)operand).Value;
 
                 default:
                     return 0;

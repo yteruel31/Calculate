@@ -16,7 +16,7 @@ namespace Calculate.Lib.Services
 
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public static OperandFunctionBase Create(string input)
+        public static OperandBase Create(string input)
         {
             Logger.Debug($"Create({input})");
             if (HasParenthesisToRemove(input))
@@ -27,17 +27,14 @@ namespace Calculate.Lib.Services
             bool isValue = decimal.TryParse(input, out decimal outValue);
             if (isValue)
             {
-                return new OperandFunctionBase(OperandBase.OperandType.Value)
-                {
-                    Value = outValue
-                };
+                return new OperandValue(outValue);
             }
 
             if (IsOperation(input, "+"))
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '+');
                 string rightOperand = GetRightOperandOfOperationString(input, '+');
-                return new OperandFunctionBase(OperandBase.OperandType.Addition)
+                return new OperandFunctionBase(OperandType.Addition)
                 {
                     LeftOperand = Create(leftOperand),
                     RightOperand = Create(rightOperand)
@@ -48,7 +45,7 @@ namespace Calculate.Lib.Services
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '-');
                 string rightOperand = GetRightOperandOfOperationString(input, '-');
-                return new OperandFunctionBase(OperandBase.OperandType.Substract)
+                return new OperandFunctionBase(OperandType.Substract)
                 {
                     LeftOperand = Create(leftOperand),
                     RightOperand = Create(rightOperand)
@@ -59,7 +56,7 @@ namespace Calculate.Lib.Services
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '*');
                 string rightOperand = GetRightOperandOfOperationString(input, '*');
-                return new OperandFunctionBase(OperandBase.OperandType.Multiply)
+                return new OperandFunctionBase(OperandType.Multiply)
                 {
                     LeftOperand = Create(leftOperand),
                     RightOperand = Create(rightOperand)
@@ -70,7 +67,7 @@ namespace Calculate.Lib.Services
             {
                 string leftOperand = GetLeftOperandOfOperationString(input, '/');
                 string rightOperand = GetRightOperandOfOperationString(input, '/');
-                return new OperandFunctionBase(OperandBase.OperandType.Divide)
+                return new OperandFunctionBase(OperandType.Divide)
                 {
                     LeftOperand = Create(leftOperand),
                     RightOperand = Create(rightOperand)

@@ -11,16 +11,6 @@
         {
         }
 
-        public enum OperandType
-        {
-            Addition,
-            Substract,
-            Multiply,
-            Divide,
-            Value
-        }
-
         public OperandType Type { get; set; }
-        public decimal Value { get; set; }
     }
 }
