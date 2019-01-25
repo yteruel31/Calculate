@@ -21,7 +21,7 @@ namespace Calculate.WPF.ViewModel
         public MainViewModel(IFormulaDataService formulaDataService, IMainViewModelService mainViewModelService, IDialogCoordinator dialogCoordinator)
         {
             _formulaDataService = formulaDataService;
-            _dialogCoordinator = dialogCoordinator;
+            DialogCoordinator = dialogCoordinator;
             _mainViewModelService = mainViewModelService;
 
             GetDataInRowCommand = new CustomCommand(GetDataInRow, CanInteract, nameof(GetDataInRowCommand));
@@ -146,13 +146,13 @@ namespace Calculate.WPF.ViewModel
             catch (NullReferenceException e)
             {
                 Logger.Error(e);
-                await _dialogCoordinator.ShowMessageAsync(this, "Erreur", e.ToString());
+                await DialogCoordinator.ShowMessageAsync(this, "Erreur", e.ToString());
                 TextInput = null;
             }
             catch (DivideByZeroException e)
             {
                 Logger.Error(e,"Impossible de Div par 0");
-                await _dialogCoordinator.ShowMessageAsync(this, "Erreur", "Impossible de diviser par 0");
+                await DialogCoordinator.ShowMessageAsync(this, "Erreur", "Impossible de diviser par 0");
                 TextInput = null;
             }
         }
