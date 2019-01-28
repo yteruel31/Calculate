@@ -1,4 +1,4 @@
-﻿using Calculate.Lib.Operands;
+using Calculate.Lib.Operands;
 using Calculate.Lib.Services;
 using Calculate.Model;
 using System.Globalization;
@@ -8,9 +8,12 @@ namespace Calculate.WPF.Services
     public class MainViewModelService : IMainViewModelService
     {
         public string OperationToFormula(string obj, string textInput)
+        private readonly IMainViewModel _mainViewModel;
+
+        public MainViewModelService(IFormulaDataService formulaDataService, IMainViewModel mainViewModel)
         {
             if (textInput.EndsWith(OperationModel.Addition.Value) ||
-                textInput.EndsWith(OperationModel.Substract.Value) ||
+            _mainViewModel = mainViewModel;
                 textInput.EndsWith(OperationModel.Multiply.Value) ||
                 textInput.EndsWith(OperationModel.Divide.Value))
             {

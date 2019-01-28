@@ -1,4 +1,4 @@
-﻿using Calculate.Model;
+using Calculate.Model;
 using Calculate.WPF.Extensions;
 using Calculate.WPF.Services;
 using Calculate.WPF.Utility;
@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace Calculate.WPF.ViewModel
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase, IMainViewModel
     {
         private DataGridCellInfo _cellInfo;
         private ObservableCollection<Formula> _formulas;
