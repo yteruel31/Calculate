@@ -6,21 +6,21 @@ namespace Calculate.WPF.Services
 {
     public class FormulaDataService : IFormulaDataService
     {
-        private IFormulaRepository repository;
+        private readonly IFormulaRepository _repository;
 
         public FormulaDataService(IFormulaRepository repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
         public List<Formula> GetAllFormulas()
         {
-            return repository.GetFormulas();
+            return _repository.GetFormulas();
         }
 
         public void AddFormula(Formula formula)
         {
-            repository.AddFormula(formula);
+            _repository.AddFormula(formula);
         }
     }
 }
