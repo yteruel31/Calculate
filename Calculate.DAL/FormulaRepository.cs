@@ -1,34 +1,25 @@
-﻿using System.Collections.Generic;
-using Calculate.Model;
+﻿using Calculate.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Calculate.DAL
 {
     public class FormulaRepository : IFormulaRepository
     {
-        private static List<Formula> _formulas;
-
-        public FormulaRepository()
-        {
-
-        }
         public void AddFormula(Formula formula)
         {
-            _formulas.Add(formula);
+            if (Properties.Settings.Default.Formulas == null)
+            {
+                Properties.Settings.Default.Formulas = new FormulaCollection();
+            }
+
+            Properties.Settings.Default.Formulas.Add(formula);
+            Properties.Settings.Default.Save();
         }
 
         public List<Formula> GetFormulas()
         {
-            if (_formulas == null)
-            {
-                LoadFormulas();
-            }
-
-            return _formulas;
-        }
-
-        private void LoadFormulas()
-        {
-            _formulas = new List<Formula>();
+            return Properties.Settings.Default.Formulas ?? new List<Formula>();
         }
     }
 }

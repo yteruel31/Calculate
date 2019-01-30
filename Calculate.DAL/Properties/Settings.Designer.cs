@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Calculate.WPF.View.View.Properties {
+namespace Calculate.DAL.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,6 +20,17 @@ namespace Calculate.WPF.View.View.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::Calculate.Model.FormulaCollection Formulas {
+            get {
+                return ((global::Calculate.Model.FormulaCollection)(this["Formulas"]));
+            }
+            set {
+                this["Formulas"] = value;
             }
         }
     }
