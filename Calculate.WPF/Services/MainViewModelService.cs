@@ -9,7 +9,7 @@ namespace Calculate.WPF.Services
 {
     public class MainViewModelService : IMainViewModelService
     {
-        public string OperationToFormula(string obj, string textInput)
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly IFormulaDataService _formulaDataService;
 
         public MainViewModelService(IFormulaDataService formulaDataService)
