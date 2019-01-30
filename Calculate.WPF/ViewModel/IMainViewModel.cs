@@ -6,6 +6,5 @@ namespace Calculate.WPF.ViewModel
     public interface IMainViewModel
     {
         ObservableCollection<Formula> Formulas { get; set; }
-
     }
 }
