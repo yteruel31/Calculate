@@ -1,4 +1,4 @@
-using Calculate.Lib.Services;
+﻿using Calculate.Lib.Services;
 using Calculate.Model;
 using Calculate.WPF.Extensions;
 using System;
@@ -74,6 +74,10 @@ namespace Calculate.WPF.Services
             }
         }
 
+        public void AddFormula(Formula formula)
+        {
+            _formulaDataService.AddFormula(formula);
+        }
 
         public ObservableCollection<Formula> LoadData()
         {

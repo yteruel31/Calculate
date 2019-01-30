@@ -139,8 +139,10 @@ namespace Calculate.WPF.ViewModel
             try
             {
                 Logger.Info($"L'opération utilisée est : {TextInput}");
-                _formulas.Add(_mainViewModelService.GetFormula(TextInput));
-                TextInput = _mainViewModelService.EqualFormula(TextInput);
+                var formula = _mainViewModelService.EqualFormula(TextInput);
+                Formulas.Add(formula);
+                _mainViewModelService.AddFormula(formula);
+                TextInput = formula.Result;
                 Logger.Info($"Le résultat est : {_mainViewModelService.EqualFormula(TextInput)}");
             }
             catch (NullReferenceException e)
