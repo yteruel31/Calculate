@@ -1,10 +1,9 @@
-﻿using Calculate.Lib.Operands;
-using Calculate.Lib.Services;
+﻿using Calculate.Lib.Services;
 using NUnit.Framework;
 
-namespace Calculate.Test.OperandFactoryTests
+namespace Calculate.Tests.ParenthesisServiceTests
 {
-    public class WhenGetOperationInsideParenthesisStringCalled
+    public class When_GetOperationInsideParenthesisString_Called
     {
         [TestCase("(2+3)", ExpectedResult = "2+3")]
         [TestCase("(5)", ExpectedResult = "5")]
@@ -14,7 +13,7 @@ namespace Calculate.Test.OperandFactoryTests
         [TestCase("5*(1+2)", ExpectedResult = "1+2")]
         public string Decimal_Value_Case(string value)
         {
-            return OperandFactory.GetOperationInsideParenthesisString(value);
+            return ParenthesisService.GetOperationInsideParenthesisString(value);
         }
     }
 }

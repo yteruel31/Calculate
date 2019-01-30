@@ -1,8 +1,7 @@
-﻿using Calculate.Lib.Operands;
-using Calculate.Lib.Services;
+﻿using Calculate.Lib.Services;
 using NUnit.Framework;
 
-namespace Calculate.Test.OperandFactoryTests
+namespace Calculate.Tests.ParenthesisServiceTests
 {
     public class When_HasParenthesisToRemove_Called
     {
@@ -17,7 +16,7 @@ namespace Calculate.Test.OperandFactoryTests
         [TestCase("((1+2)*3)", ExpectedResult = true)]
         public bool Default_case(string value)
         {
-            return OperandFactory.HasParenthesisToRemove(value);
+            return ParenthesisService.HasParenthesisToRemove(value);
         }
     }
 }

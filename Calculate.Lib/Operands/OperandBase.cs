@@ -2,12 +2,12 @@
 {
     public abstract class OperandBase
     {
-        public OperandBase(OperandType type)
+        protected OperandBase(OperandType type)
         {
             Type = type;
         }
 
-        public OperandBase()
+        protected OperandBase()
         {
         }
 

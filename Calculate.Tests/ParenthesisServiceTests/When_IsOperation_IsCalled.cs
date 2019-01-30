@@ -1,8 +1,7 @@
-﻿using Calculate.Lib.Operands;
-using Calculate.Lib.Services;
+﻿using Calculate.Lib.Services;
 using NUnit.Framework;
 
-namespace Calculate.Test.OperandFactoryTests
+namespace Calculate.Tests.ParenthesisServiceTests
 {
     public class When_IsOperation_IsCalled
     {
@@ -13,7 +12,7 @@ namespace Calculate.Test.OperandFactoryTests
         [TestCase("1*(2+2)", ExpectedResult = false)]
         public bool Addition_Default_Case(string input)
         {
-            return OperandFactory.IsOperation(input, "+");
+            return ParenthesisService.IsOperation(input, "+");
         }
 
         [TestCase("1-2", ExpectedResult = true)]
@@ -23,7 +22,7 @@ namespace Calculate.Test.OperandFactoryTests
         [TestCase("1*(2+2)", ExpectedResult = false)]
         public bool Substract_Default_Case(string input)
         {
-            return OperandFactory.IsOperation(input, "-");
+            return ParenthesisService.IsOperation(input, "-");
         }
 
         [TestCase("1*2", ExpectedResult = true)]
@@ -33,7 +32,7 @@ namespace Calculate.Test.OperandFactoryTests
         [TestCase("1-(2+2)", ExpectedResult = false)]
         public bool Multiply_Default_Case(string input)
         {
-            return OperandFactory.IsOperation(input, "*");
+            return ParenthesisService.IsOperation(input, "*");
         }
 
         [TestCase("2/3", ExpectedResult = true)]
@@ -43,7 +42,7 @@ namespace Calculate.Test.OperandFactoryTests
         [TestCase("1*(2+2)", ExpectedResult = false)]
         public bool Divide_Default_Case(string input)
         {
-            return OperandFactory.IsOperation(input, "/");
+            return ParenthesisService.IsOperation(input, "/");
         }
     }
 }

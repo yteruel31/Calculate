@@ -57,6 +57,7 @@
     <Compile Include="Services\ICalculationService.cs" />
     <Compile Include="Services\OperandFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ParenthesisService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
