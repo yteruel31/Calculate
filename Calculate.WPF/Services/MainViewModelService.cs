@@ -43,7 +43,19 @@ namespace Calculate.WPF.Services
         }
 
         public Formula EqualFormula(string textInput)
+        {
+            try
+            {
+                var operand = new CalculationService();
+                return GetFormulaObject(textInput,
+                    operand.Calculate(OperandFactory.Create(textInput)).ToString(CultureInfo.CurrentCulture));
             }
+            catch (StackOverflowException e)
+            {
+                Logger.Error(e);
+                return null;
+            }
+        }
 
         public Formula GetFormulaObject(string textInput, string result)
         {
