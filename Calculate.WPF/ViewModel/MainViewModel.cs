@@ -172,9 +172,9 @@ namespace Calculate.WPF.ViewModel
             };
         }
 
-        public void LoadData()
+        private void LoadData(object obj)
         {
-            Formulas = _formulaDataService.GetAllFormulas().ToObservableCollection();
+            Formulas = _mainViewModelService.LoadData();
         }
 
         private void NumberToFormula(object obj)

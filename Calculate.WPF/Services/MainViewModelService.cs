@@ -74,6 +74,12 @@ namespace Calculate.WPF.Services
             }
         }
 
+
+        public ObservableCollection<Formula> LoadData()
+        {
+            return _formulaDataService.GetAllFormulas().ToObservableCollection();
+        }
+
         public string NumberToFormula(string obj, string textInput)
         {
             return textInput + obj;
