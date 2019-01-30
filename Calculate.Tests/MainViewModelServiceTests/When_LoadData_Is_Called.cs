@@ -28,7 +28,7 @@ namespace Calculate.Tests.MainViewModelServiceTests
                 MessageDialogStyle.Affirmative, null));
             _mainViewModel.Setup(m => m.Formulas).Returns(GetObservableCollection());
             _formulaDataService.Setup(f => f.GetAllFormulas()).Returns(GetFormulas()).Callback(() => { });
-            return new MainViewModelService(_formulaDataService.Object, _mainViewModel.Object);
+            return new MainViewModelService(_formulaDataService.Object);
         }
 
         private static List<Formula> GetFormulas()
@@ -47,11 +47,11 @@ namespace Calculate.Tests.MainViewModelServiceTests
             // Arrange
             MainViewModelService sut = GetSut();
             // Act
-            sut.LoadData();
+            var formulas = sut.LoadData();
             // Assert
-            sut.GetFormulas().Count.Should().Be(1);
-            sut.GetFormulas()[0].FormulaContent.Should().Be("ffgh");
-            sut.GetFormulas()[0].Result.Should().Be("aze");
+            formulas.Count.Should().Be(1);
+            formulas[0].FormulaContent.Should().Be("ffgh");
+            formulas[0].Result.Should().Be("aze");
             _formulaDataService.Verify(f => f.GetAllFormulas(), Times.Once);
         }
     }
