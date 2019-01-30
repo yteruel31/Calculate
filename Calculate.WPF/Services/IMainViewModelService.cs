@@ -1,4 +1,5 @@
-﻿using Calculate.Model;
+using System.Collections.ObjectModel;
+using Calculate.Model;
 
 namespace Calculate.WPF.Services
 {
@@ -10,14 +11,15 @@ namespace Calculate.WPF.Services
 
         string ParenthesisToFormula(string obj, string textInput);
 
-        string EqualFormula(string textInput);
-
-        Formula GetFormula(string textInput);
+        Formula EqualFormula(string textInput);
 
         string DeleteFormula(string textInput);
 
         bool CanParenthesisToFormula(string obj, string textInput);
 
         bool CanEqual(string textInput);
+
+        ObservableCollection<Formula> LoadData();
+        void AddFormula(Formula formula);
     }
 }
