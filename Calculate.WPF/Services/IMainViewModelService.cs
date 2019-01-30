@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Calculate.Model;
 
 namespace Calculate.WPF.Services
