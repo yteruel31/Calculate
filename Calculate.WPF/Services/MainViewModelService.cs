@@ -1,6 +1,8 @@
-using Calculate.Lib.Operands;
 using Calculate.Lib.Services;
 using Calculate.Model;
+using Calculate.WPF.Extensions;
+using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace Calculate.WPF.Services
@@ -8,54 +10,21 @@ namespace Calculate.WPF.Services
     public class MainViewModelService : IMainViewModelService
     {
         public string OperationToFormula(string obj, string textInput)
-        private readonly IMainViewModel _mainViewModel;
+        private readonly IFormulaDataService _formulaDataService;
 
-        public MainViewModelService(IFormulaDataService formulaDataService, IMainViewModel mainViewModel)
+        public MainViewModelService(IFormulaDataService formulaDataService)
         {
-            if (textInput.EndsWith(OperationModel.Addition.Value) ||
-            _mainViewModel = mainViewModel;
-                textInput.EndsWith(OperationModel.Multiply.Value) ||
-                textInput.EndsWith(OperationModel.Divide.Value))
+            _formulaDataService = formulaDataService;
+        }
+
+        public bool CanEqual(string textInput)
+        {
+            if (textInput == null)
             {
-                textInput = textInput.Remove(textInput.Length - 1);
+                return false;
             }
 
-            return textInput + obj;
-        }
-
-        public string NumberToFormula(string obj, string textInput)
-        {
-            return textInput + obj;
-        }
-
-        public string ParenthesisToFormula(string obj, string textInput)
-        {
-            if (textInput.Equals("()"))
-            {
-                return textInput.Insert(1, "0");
-            }
-
-            return textInput + obj;
-        }
-
-        public string EqualFormula(string textInput)
-        {
-            CalculationService operand = new CalculationService();
-            return operand.Calculate(OperandFactory.Create(textInput)).ToString(CultureInfo.CurrentCulture);
-        }
-
-        public Formula GetFormula(string textInput)
-        {
-            return new Formula()
-            {
-                FormulaContent = textInput,
-                Result = EqualFormula(textInput)
-            };
-        }
-
-        public string DeleteFormula(string textInput)
-        {
-            return textInput.Remove(textInput.Length - 1);
+            return true;
         }
 
         public bool CanParenthesisToFormula(string obj, string textInput)
@@ -67,13 +36,58 @@ namespace Calculate.WPF.Services
 
             return true;
         }
-        public bool CanEqual(string textInput)
+
+        public string DeleteFormula(string textInput)
         {
-            if (textInput == null)
-            {
-                return false;
+            return textInput.Remove(textInput.Length - 1);
+        }
+
+        public Formula EqualFormula(string textInput)
             }
-            return true;
+
+        public Formula GetFormulaObject(string textInput, string result)
+        {
+            try
+            {
+                return new Formula()
+                {
+                    FormulaContent = textInput,
+                    Result = result
+                };
+            }
+            catch (StackOverflowException e)
+            {
+                Logger.Error(e);
+                return null;
+            }
+        }
+
+        public string NumberToFormula(string obj, string textInput)
+        {
+            return textInput + obj;
+        }
+
+        public string OperationToFormula(string obj, string textInput)
+        {
+            if (textInput.EndsWith(OperationModel.Addition.Value) ||
+                textInput.EndsWith(OperationModel.Substract.Value) ||
+                textInput.EndsWith(OperationModel.Multiply.Value) ||
+                textInput.EndsWith(OperationModel.Divide.Value))
+            {
+                textInput = textInput.Remove(textInput.Length - 1);
+            }
+
+            return textInput + obj;
+        }
+
+        public string ParenthesisToFormula(string obj, string textInput)
+        {
+            if (textInput.Equals("()"))
+            {
+                return textInput.Insert(1, "0");
+            }
+
+            return textInput + obj;
         }
     }
 }
