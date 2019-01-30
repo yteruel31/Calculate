@@ -215,3 +215,12 @@ FakesAssemblies/
 **/*.Server/GeneratedArtifacts
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
+
+# SonarQube
+
+.sonarqube/
+
+# dotCover
+
+dotCover/
+dotCover.html
