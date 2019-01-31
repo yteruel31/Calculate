@@ -1,4 +1,4 @@
-﻿using Calculate.Model;
+using Calculate.Model;
 using Calculate.WPF.Services;
 using Calculate.WPF.Utility;
 using MahApps.Metro.Controls.Dialogs;
@@ -34,6 +34,7 @@ namespace Calculate.WPF.ViewModel
             ParenthesisToFormulaCommand = new CustomCommand(ParenthesisToFormula, CanParenthesisToFormula,
                 nameof(ParenthesisToFormulaCommand));
             LoadDataCommand = new CustomCommand(LoadData, CanInteract, nameof(LoadDataCommand));
+            CleanHistoryCommand = new CustomCommand(CleanHistory, CanInteract, nameof(LoadDataCommand));
             ListButtons();
         }
 
@@ -47,6 +48,8 @@ namespace Calculate.WPF.ViewModel
                 OnPropertyChanged(nameof(CellInfo));
             }
         }
+
+        public ICommand CleanHistoryCommand { get; set; }
 
         public ICommand DeleteAllCommand { get; }
 
@@ -117,6 +120,11 @@ namespace Calculate.WPF.ViewModel
             return _mainViewModelService.CanParenthesisToFormula(obj as string, TextInput);
         }
 
+        private void CleanHistory(object obj)
+        {
+            _mainViewModelService.CleanHistory();
+            Formulas.Clear();
+        }
         private void DeleteAllFormula(object obj)
         {
             TextInput = null;

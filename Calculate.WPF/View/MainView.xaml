@@ -34,20 +34,32 @@
         <controls:FlyoutsControl>
             <controls:Flyout IsOpen="{Binding IsOpenHistoryFlyout}" Header="Historique" Position="Right" Theme="Adapt">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    
                     <DataGrid ItemsSource="{Binding Formulas}"
                               SelectedItem="{Binding SelectedFormula, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                               IsReadOnly="True"
                               AutoGenerateColumns="False"
                               CurrentCell="{Binding CellInfo, Mode=OneWayToSource}"
-                              >
+                              Grid.Row="0">
                         <DataGrid.InputBindings>
                             <MouseBinding Gesture="LeftDoubleClick" Command="{Binding GetDataInRowCommand}"></MouseBinding>
                         </DataGrid.InputBindings>
-                        <DataGrid.Columns >
+                        <DataGrid.Columns>
                             <DataGridTextColumn Header="Formule" Binding="{Binding FormulaContent}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Résultat" Binding="{Binding Result}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <UniformGrid Columns="5" Grid.Row="1" Margin="10">
+                        <Button Command="{Binding CleanHistoryCommand}" ToolTip="Nettoyer l'historique">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterial Kind="Broom" />
+                            </StackPanel>
+                        </Button>
+                    </UniformGrid>
                 </Grid>
             </controls:Flyout>
         </controls:FlyoutsControl>

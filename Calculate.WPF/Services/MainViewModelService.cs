@@ -1,4 +1,4 @@
-﻿using Calculate.Lib.Services;
+using Calculate.Lib.Services;
 using Calculate.Model;
 using Calculate.WPF.Extensions;
 using System;
@@ -35,6 +35,11 @@ namespace Calculate.WPF.Services
             }
 
             return true;
+        }
+
+        public void CleanHistory()
+        {
+            _formulaDataService.DeleteFormula();
         }
 
         public string DeleteFormula(string textInput)

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Calculate.DAL;
 using Calculate.Model;
 
@@ -14,8 +14,9 @@ namespace Calculate.WPF.Services
         }
 
         public List<Formula> GetAllFormulas()
+        public void DeleteFormula()
         {
-            return _repository.GetFormulas();
+            _repository.DeleteFormula();
         }
 
         public void AddFormula(Formula formula)

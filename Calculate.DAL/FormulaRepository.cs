@@ -1,4 +1,4 @@
-﻿using Calculate.Model;
+using Calculate.Model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +14,12 @@ namespace Calculate.DAL
             }
 
             Properties.Settings.Default.Formulas.Add(formula);
+            Properties.Settings.Default.Save();
+        }
+
+        public void DeleteFormula()
+        {
+            Properties.Settings.Default.Formulas.Clear();
             Properties.Settings.Default.Save();
         }
 

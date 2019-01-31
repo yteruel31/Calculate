@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using Calculate.Model;
 
 namespace Calculate.WPF.Services
@@ -11,7 +11,7 @@ namespace Calculate.WPF.Services
 
         string ParenthesisToFormula(string obj, string textInput);
 
-        Formula EqualFormula(string textInput);
+        void CleanHistory();
 
         string DeleteFormula(string textInput);
 
