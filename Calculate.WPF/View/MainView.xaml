@@ -12,8 +12,8 @@
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         Title="Calculatrice" Height="350" Width="270"
-        ResizeMode="CanResize" 
-        WindowStyle="ToolWindow" 
+        ResizeMode="CanResize"
+        WindowStyle="ToolWindow"
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding Source={StaticResource MainViewModelLocator}, Path=MainViewModel}"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}" Name="Window" MinHeight="300" MinWidth="200"
@@ -21,6 +21,27 @@
     <Window.Resources>
         <converters:FontSizeConverter x:Key="FontSizeConverter"></converters:FontSizeConverter>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="NumPad0" Command="{Binding NumberToFormulaCommand}" CommandParameter="0" />
+        <KeyBinding Key="NumPad1" Command="{Binding NumberToFormulaCommand}" CommandParameter="1" />
+        <KeyBinding Key="NumPad2" Command="{Binding NumberToFormulaCommand}" CommandParameter="2" />
+        <KeyBinding Key="NumPad3" Command="{Binding NumberToFormulaCommand}" CommandParameter="3" />
+        <KeyBinding Key="NumPad4" Command="{Binding NumberToFormulaCommand}" CommandParameter="4" />
+        <KeyBinding Key="NumPad5" Command="{Binding NumberToFormulaCommand}" CommandParameter="5" />
+        <KeyBinding Key="NumPad6" Command="{Binding NumberToFormulaCommand}" CommandParameter="6" />
+        <KeyBinding Key="NumPad7" Command="{Binding NumberToFormulaCommand}" CommandParameter="7" />
+        <KeyBinding Key="NumPad8" Command="{Binding NumberToFormulaCommand}" CommandParameter="8" />
+        <KeyBinding Key="NumPad9" Command="{Binding NumberToFormulaCommand}" CommandParameter="9" />
+        <KeyBinding Key="Add" Command="{Binding OperationToFormulaCommand}" CommandParameter="+" />
+        <KeyBinding Key="Subtract" Command="{Binding OperationToFormulaCommand}" CommandParameter="-" />
+        <KeyBinding Key="Multiply" Command="{Binding OperationToFormulaCommand}" CommandParameter="*" />
+        <KeyBinding Key="Divide" Command="{Binding OperationToFormulaCommand}" CommandParameter="/" />
+        <KeyBinding Key="OemComma" Command="{Binding NumberToFormulaCommand}" CommandParameter="," />
+        <KeyBinding Key="D5" Command="{Binding NumberToFormulaCommand}" CommandParameter="(" />
+        <KeyBinding Key="OemOpenBrackets" Command="{Binding NumberToFormulaCommand}" CommandParameter=")" />
+        <KeyBinding Key="Enter" Command="{Binding EqualCommand}" />
+        <KeyBinding Key="Back" Command="{Binding DeleteCommand}" />
+    </Window.InputBindings>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <Button Command="{Binding HistoryFlyoutCommand}">
@@ -127,15 +148,10 @@
                 Grid.ColumnSpan="4" >=</Button>
         <Button Command="{Binding ParenthesisToFormulaCommand}" CommandParameter="(" Grid.Row="3" Grid.Column="3" >(</Button>
         <Button Command="{Binding ParenthesisToFormulaCommand}" CommandParameter=")" Grid.Row="3" Grid.Column="4" >)</Button>
-        <utility:NumericTextBox Text="{Binding TextInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 x:Name="TextBox"
+        <TextBox Text="{Binding TextInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  FontSize="{Binding Converter={StaticResource FontSizeConverter}, RelativeSource={RelativeSource Mode=Self}, Path=ActualWidth}"
                  Grid.Row="1"
                  Grid.RowSpan="2"
-                 Grid.Column="1" Grid.ColumnSpan="4" Background="White" VerticalAlignment="Center">
-            <utility:NumericTextBox.InputBindings>
-                <KeyBinding Command="{Binding EqualCommand}" Key="Enter"/>
-            </utility:NumericTextBox.InputBindings>
-        </utility:NumericTextBox>
+                 Grid.Column="1" Grid.ColumnSpan="4" Background="White" VerticalAlignment="Center" IsReadOnly="True" />
     </Grid>
 </controls:MetroWindow>
