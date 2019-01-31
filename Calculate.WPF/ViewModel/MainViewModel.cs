@@ -1,4 +1,4 @@
-using Calculate.Model;
+﻿using Calculate.Model;
 using Calculate.WPF.Services;
 using Calculate.WPF.Utility;
 using MahApps.Metro.Controls.Dialogs;
@@ -25,11 +25,11 @@ namespace Calculate.WPF.ViewModel
 
             GetDataInRowCommand = new CustomCommand(GetDataInRow, CanInteract, nameof(GetDataInRowCommand));
             HistoryFlyoutCommand = new CustomCommand(HistoryFlyout, CanInteract, nameof(HistoryFlyoutCommand));
-            EqualCommand = new CustomCommand(EqualFormula, CanEqual, nameof(EqualCommand));
-            DeleteCommand = new CustomCommand(DeleteFormula, CanInteract, nameof(DeleteCommand));
-            DeleteAllCommand = new CustomCommand(DeleteAllFormula, CanInteract, nameof(DeleteAllCommand));
+            EqualCommand = new CustomCommand(EqualFormula, CanInteractWithSpecific, nameof(EqualCommand));
+            DeleteCommand = new CustomCommand(DeleteFormula, CanInteractWithSpecific, nameof(DeleteCommand));
+            DeleteAllCommand = new CustomCommand(DeleteAllFormula, CanInteractWithSpecific, nameof(DeleteAllCommand));
             OperationToFormulaCommand =
-                new CustomCommand(OperationToFormula, CanInteract, nameof(OperationToFormulaCommand));
+                new CustomCommand(OperationToFormula, CanInteractWithSpecific, nameof(OperationToFormulaCommand));
             NumberToFormulaCommand = new CustomCommand(NumberToFormula, CanInteract, nameof(NumberToFormulaCommand));
             ParenthesisToFormulaCommand = new CustomCommand(ParenthesisToFormula, CanParenthesisToFormula,
                 nameof(ParenthesisToFormulaCommand));
@@ -105,14 +105,14 @@ namespace Calculate.WPF.ViewModel
             }
         }
 
-        private bool CanEqual(object obj)
-        {
-            return _mainViewModelService.CanEqual(TextInput);
-        }
-
         private bool CanInteract(object obj)
         {
             return true;
+        }
+
+        private bool CanInteractWithSpecific(object obj)
+        {
+            return _mainViewModelService.CanInteractWithSpecific(TextInput);
         }
 
         private bool CanParenthesisToFormula(object obj)
