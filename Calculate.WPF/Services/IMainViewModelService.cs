@@ -1,25 +1,30 @@
+﻿using Calculate.Model;
 using System.Collections.ObjectModel;
-using Calculate.Model;
 
 namespace Calculate.WPF.Services
 {
     public interface IMainViewModelService
     {
-        string OperationToFormula(string obj, string textInput);
+        void AddFormula(Formula formula);
 
-        string NumberToFormula(string obj, string textInput);
+        bool CanInteractWithSpecific(string textInput);
 
-        string ParenthesisToFormula(string obj, string textInput);
+        bool CanParenthesisToFormula(string obj, string textInput);
 
         void CleanHistory();
 
         string DeleteFormula(string textInput);
 
-        bool CanParenthesisToFormula(string obj, string textInput);
+        Formula EqualFormula(string textInput);
 
-        bool CanEqual(string textInput);
+        Formula GetFormulaObject(string textInput, string result);
 
         ObservableCollection<Formula> LoadData();
-        void AddFormula(Formula formula);
+
+        string NumberToFormula(string obj, string textInput);
+
+        string OperationToFormula(string obj, string textInput);
+
+        string ParenthesisToFormula(string obj, string textInput);
     }
 }

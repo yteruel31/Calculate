@@ -135,7 +135,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Command="{Binding Path=DataContext.OperationToFormulaCommand, ElementName=Window}"
-                            CommandParameter="{Binding}" Content="{Binding}" />
+                            CommandParameter="{Binding}" Content="{Binding}"  />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

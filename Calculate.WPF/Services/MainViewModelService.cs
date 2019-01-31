@@ -1,9 +1,7 @@
-using Calculate.Lib.Services;
+﻿using Calculate.Lib.Services;
 using Calculate.Model;
 using Calculate.WPF.Extensions;
-using System;
 using System.Collections.ObjectModel;
-using System.Globalization;
 
 namespace Calculate.WPF.Services
 {
@@ -17,9 +15,14 @@ namespace Calculate.WPF.Services
             _formulaDataService = formulaDataService;
         }
 
-        public bool CanEqual(string textInput)
+        public void AddFormula(Formula formula)
         {
-            if (textInput == null)
+            _formulaDataService.AddFormula(formula);
+        }
+
+        public bool CanInteractWithSpecific(string textInput)
+        {
+            if (string.IsNullOrEmpty(textInput))
             {
                 return false;
             }
@@ -46,44 +49,21 @@ namespace Calculate.WPF.Services
         {
             return textInput.Remove(textInput.Length - 1);
         }
-
         public Formula EqualFormula(string textInput)
         {
-            try
-            {
-                var operand = new CalculationService();
-                return GetFormulaObject(textInput,
-                    operand.Calculate(OperandFactory.Create(textInput)).ToString(CultureInfo.CurrentCulture));
-            }
-            catch (StackOverflowException e)
-            {
-                Logger.Error(e);
-                return null;
-            }
+            var operand = new CalculationService();
+            return GetFormulaObject(textInput,
+                operand.Calculate(OperandFactory.Create(textInput)).ToString());
         }
 
         public Formula GetFormulaObject(string textInput, string result)
         {
-            try
+            return new Formula()
             {
-                return new Formula()
-                {
-                    FormulaContent = textInput,
-                    Result = result
-                };
-            }
-            catch (StackOverflowException e)
-            {
-                Logger.Error(e);
-                return null;
-            }
+                FormulaContent = textInput,
+                Result = result
+            };
         }
-
-        public void AddFormula(Formula formula)
-        {
-            _formulaDataService.AddFormula(formula);
-        }
-
         public ObservableCollection<Formula> LoadData()
         {
             return _formulaDataService.GetAllFormulas().ToObservableCollection();

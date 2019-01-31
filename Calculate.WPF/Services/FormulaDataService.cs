@@ -1,6 +1,6 @@
-using System.Collections.Generic;
-using Calculate.DAL;
+﻿using Calculate.DAL;
 using Calculate.Model;
+using System.Collections.Generic;
 
 namespace Calculate.WPF.Services
 {
@@ -13,15 +13,19 @@ namespace Calculate.WPF.Services
             _repository = repository;
         }
 
-        public List<Formula> GetAllFormulas()
+        public void AddFormula(Formula formula)
+        {
+            _repository.AddFormula(formula);
+        }
+
         public void DeleteFormula()
         {
             _repository.DeleteFormula();
         }
 
-        public void AddFormula(Formula formula)
+        public List<Formula> GetAllFormulas()
         {
-            _repository.AddFormula(formula);
+            return _repository.GetFormulas();
         }
     }
 }

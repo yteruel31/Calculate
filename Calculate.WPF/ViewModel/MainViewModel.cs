@@ -193,10 +193,12 @@ namespace Calculate.WPF.ViewModel
         {
             Formulas = _mainViewModelService.LoadData();
         }
+
         private void NumberToFormula(object obj)
         {
             TextInput = _mainViewModelService.NumberToFormula(obj as string, TextInput);
         }
+
         private void OperationToFormula(object obj)
         {
             TextInput = _mainViewModelService.OperationToFormula(obj as string, TextInput);

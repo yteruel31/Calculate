@@ -1,6 +1,5 @@
-using Calculate.Model;
+﻿using Calculate.Model;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Calculate.DAL
 {
