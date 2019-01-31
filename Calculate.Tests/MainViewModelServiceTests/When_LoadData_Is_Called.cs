@@ -14,14 +14,12 @@ namespace Calculate.Tests.MainViewModelServiceTests
     public class When_LoadData_Is_Called
     {
         private Mock<IFormulaDataService> _formulaDataService;
-        private Mock<IMainViewModelService> _mainViewModelService;
         private Mock<IMainViewModel> _mainViewModel;
         private Mock<IDialogCoordinator> _dialog;
 
         private MainViewModelService GetSut()
         {
             _formulaDataService = new Mock<IFormulaDataService>();
-            _mainViewModelService = new Mock<IMainViewModelService>();
             _mainViewModel = new Mock<IMainViewModel>();
             _dialog = new Mock<IDialogCoordinator>();
             _dialog.Setup(d => d.ShowMessageAsync(It.IsAny<Mock<Formula>>(), It.IsAny<string>(), It.IsAny<string>(),
