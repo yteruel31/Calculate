@@ -1,4 +1,4 @@
-<controls:MetroWindow x:Class="Calculate.WPF.View.MainView"
+﻿<controls:MetroWindow x:Class="Calculate.WPF.View.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -44,7 +44,7 @@
     </Window.InputBindings>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <Button Command="{Binding HistoryFlyoutCommand}">
+            <Button Command="{Binding HistoryFlyoutCommand}" ToolTip="Voir l'historique">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="History" />
                 </StackPanel>
