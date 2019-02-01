@@ -20,6 +20,9 @@
         mc:Ignorable="d">
     <Window.Resources>
         <converters:FontSizeConverter x:Key="FontSizeConverter"></converters:FontSizeConverter>
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontSize" Value="15" />
+        </Style>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="NumPad0" Command="{Binding NumberToFormulaCommand}" CommandParameter="0" />
@@ -135,12 +138,12 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Command="{Binding Path=DataContext.OperationToFormulaCommand, ElementName=Window}"
-                            CommandParameter="{Binding}" Content="{Binding}"  />
+                            CommandParameter="{Binding}" Content="{Binding}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <Button Command="{Binding NumberToFormulaCommand}" CommandParameter="0" Grid.Row="7" Grid.Column="1"
-                Grid.ColumnSpan="2">0</Button>
+                Grid.ColumnSpan="2" >0</Button>
         <Button Command="{Binding NumberToFormulaCommand}" CommandParameter="," Grid.Row="7" Grid.Column="3" >,</Button>
         <Button Command="{Binding DeleteCommand}" Grid.Row="3" Grid.Column="1" >&lt;-</Button>
         <Button Command="{Binding DeleteAllCommand}" Grid.Row="3" Grid.Column="2" >C</Button>
