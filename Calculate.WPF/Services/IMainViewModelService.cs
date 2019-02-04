@@ -23,7 +23,7 @@ namespace Calculate.WPF.Services
 
         string NumberToFormula(string obj, string textInput);
 
-        string OperationToFormula(string obj, string textInput);
+        string OperatorToFormula(string obj, string textInput);
 
         string ParenthesisToFormula(string obj, string textInput);
     }

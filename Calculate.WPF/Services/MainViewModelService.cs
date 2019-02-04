@@ -3,6 +3,7 @@ using Calculate.Model;
 using Calculate.WPF.Extensions;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using Calculate.WPF.Services.Validation;
 
 namespace Calculate.WPF.Services
 {
@@ -64,12 +65,9 @@ namespace Calculate.WPF.Services
             return textInput + obj;
         }
 
-        public string OperationToFormula(string obj, string textInput)
+        public string OperatorToFormula(string obj, string textInput)
         {
-            if (textInput.EndsWith(OperationModel.Addition.Value) ||
-                textInput.EndsWith(OperationModel.Substract.Value) ||
-                textInput.EndsWith(OperationModel.Multiply.Value) ||
-                textInput.EndsWith(OperationModel.Divide.Value))
+            if (InputValidation.IsEndWithOperator(textInput))
             {
                 textInput = textInput.Remove(textInput.Length - 1);
             }

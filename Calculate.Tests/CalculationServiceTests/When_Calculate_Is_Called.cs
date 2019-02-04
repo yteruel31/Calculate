@@ -13,7 +13,6 @@ namespace Calculate.Tests.CalculationServiceTests
 
         private CalculationService GetSut()
         {
-
             return new CalculationService();
         }
 
@@ -41,5 +40,4 @@ namespace Calculate.Tests.CalculationServiceTests
             return (int)sut.Calculate(operandFunctionBase);
         }
     }
-    
 }

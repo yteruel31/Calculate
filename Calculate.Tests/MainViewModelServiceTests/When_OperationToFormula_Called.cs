@@ -24,7 +24,7 @@ namespace Calculate.Tests.MainViewModelServiceTests
             // Arrange
             MainViewModelService sut = GetSut();
             // Act
-            return sut.OperationToFormula(value, "1+1+");
+            return sut.OperatorToFormula(value, "1+1+");
         }
     }
 }

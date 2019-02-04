@@ -28,8 +28,8 @@ namespace Calculate.WPF.ViewModel
             EqualCommand = new CustomCommand(EqualFormula, CanInteractWithSpecific, nameof(EqualCommand));
             DeleteCommand = new CustomCommand(DeleteFormula, CanInteractWithSpecific, nameof(DeleteCommand));
             DeleteAllCommand = new CustomCommand(DeleteAllFormula, CanInteractWithSpecific, nameof(DeleteAllCommand));
-            OperationToFormulaCommand =
-                new CustomCommand(OperationToFormula, CanInteractWithSpecific, nameof(OperationToFormulaCommand));
+            OperatorToFormulaCommand =
+                new CustomCommand(OperatorToFormula, CanInteractWithSpecific, nameof(OperatorToFormulaCommand));
             NumberToFormulaCommand = new CustomCommand(NumberToFormula, CanInteract, nameof(NumberToFormulaCommand));
             ParenthesisToFormulaCommand = new CustomCommand(ParenthesisToFormula, CanParenthesisToFormula,
                 nameof(ParenthesisToFormulaCommand));
@@ -89,7 +89,7 @@ namespace Calculate.WPF.ViewModel
 
         public ObservableCollection<string> OperationButtons { get; set; }
 
-        public ICommand OperationToFormulaCommand { get; }
+        public ICommand OperatorToFormulaCommand { get; }
 
         public ICommand ParenthesisToFormulaCommand { get; }
 
@@ -199,9 +199,9 @@ namespace Calculate.WPF.ViewModel
             TextInput = _mainViewModelService.NumberToFormula(obj as string, TextInput);
         }
 
-        private void OperationToFormula(object obj)
+        private void OperatorToFormula(object obj)
         {
-            TextInput = _mainViewModelService.OperationToFormula(obj as string, TextInput);
+            TextInput = _mainViewModelService.OperatorToFormula(obj as string, TextInput);
         }
 
         private void ParenthesisToFormula(object obj)
