@@ -89,11 +89,11 @@ namespace Calculate.WPF.Services
 
         public string ParenthesisToFormula(string obj, string textInput)
         {
-            if (textInput.Equals("()"))
+            if (textInput != null && textInput.Equals("("))
             {
-                return textInput.Insert(1, "0");
+                return textInput.Insert(1, "0)");
             }
-
+            
             return textInput + obj;
         }
     }
