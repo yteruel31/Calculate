@@ -2,12 +2,12 @@
 using Calculate.Model;
 using Calculate.WPF.Extensions;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace Calculate.WPF.Services
 {
     public class MainViewModelService : IMainViewModelService
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly IFormulaDataService _formulaDataService;
 
         public MainViewModelService(IFormulaDataService formulaDataService)
@@ -22,22 +22,12 @@ namespace Calculate.WPF.Services
 
         public bool CanInteractWithSpecific(string textInput)
         {
-            if (string.IsNullOrEmpty(textInput))
-            {
-                return false;
-            }
-
-            return true;
+            return !string.IsNullOrEmpty(textInput);
         }
 
         public bool CanParenthesisToFormula(string obj, string textInput)
         {
-            if (textInput == null && obj == ")")
-            {
-                return false;
-            }
-
-            return true;
+            return textInput != null || obj != ")";
         }
 
         public void CleanHistory()
@@ -53,7 +43,7 @@ namespace Calculate.WPF.Services
         {
             var operand = new CalculationService();
             return GetFormulaObject(textInput,
-                operand.Calculate(OperandFactory.Create(textInput)).ToString());
+                operand.Calculate(OperandFactory.Create(textInput)).ToString(CultureInfo.CurrentCulture));
         }
 
         public Formula GetFormulaObject(string textInput, string result)
