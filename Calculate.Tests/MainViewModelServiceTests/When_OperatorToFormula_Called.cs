@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Calculate.Tests.MainViewModelServiceTests
 {
     [TestFixture]
-    public class When_OperationToFormula_Called
+    public class When_OperatorToFormula_Called
     {
         private Mock<IFormulaDataService> _formulaDataServiceMock;
 
