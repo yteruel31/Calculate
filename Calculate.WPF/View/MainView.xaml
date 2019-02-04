@@ -40,8 +40,8 @@
         <KeyBinding Key="Multiply" Command="{Binding OperationToFormulaCommand}" CommandParameter="*" />
         <KeyBinding Key="Divide" Command="{Binding OperationToFormulaCommand}" CommandParameter="/" />
         <KeyBinding Key="OemComma" Command="{Binding NumberToFormulaCommand}" CommandParameter="," />
-        <KeyBinding Key="D5" Command="{Binding NumberToFormulaCommand}" CommandParameter="(" />
-        <KeyBinding Key="OemOpenBrackets" Command="{Binding NumberToFormulaCommand}" CommandParameter=")" />
+        <KeyBinding Key="D5" Command="{Binding ParenthesisToFormulaCommand}" CommandParameter="(" />
+        <KeyBinding Key="OemOpenBrackets" Command="{Binding ParenthesisToFormulaCommand}" CommandParameter=")" />
         <KeyBinding Key="Enter" Command="{Binding EqualCommand}" />
         <KeyBinding Key="Back" Command="{Binding DeleteCommand}" />
     </Window.InputBindings>
