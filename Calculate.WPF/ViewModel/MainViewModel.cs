@@ -1,4 +1,4 @@
-using Calculate.Model;
+﻿using Calculate.Model;
 using Calculate.WPF.Services;
 using Calculate.WPF.Utility;
 using MahApps.Metro.Controls.Dialogs;
@@ -147,7 +147,10 @@ namespace Calculate.WPF.ViewModel
             return _mainViewModelService.CanInteractWithOperator(TextInput);
         }
 
-        private bool CanParenthesisToFormula(object obj)
+        private bool CanOpenParenthesisToFormula(object obj)
+        {
+            return _mainViewModelService.CanOpenParenthesisToFormula(TextInput);
+        }
         private bool CanCloseParenthesisToFormula(object obj)
         {
             return _mainViewModelService.CanCloseParenthesisToFormula(TextInput);
