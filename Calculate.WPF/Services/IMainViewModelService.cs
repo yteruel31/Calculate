@@ -9,6 +9,8 @@ namespace Calculate.WPF.Services
 
         bool CanCloseParenthesisToFormula(string textInput);
 
+        bool CanEqual(string textInput);
+
         bool CanInteractWithOperator(string textInput);
 
         bool CanInteractWithSpecific(string textInput);

@@ -95,8 +95,10 @@ namespace Calculate.WPF.Services
             if (textInput == null) return false;
             return !textInput.EndsWith("(");
         }
-            
-            return textInput + obj;
+        public bool CanEqual(string textInput)
+        {
+            if (textInput == null) return false;
+            return !textInput.EndsWith("(");
         }
     }
 }

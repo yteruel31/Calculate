@@ -60,7 +60,7 @@ namespace Calculate.WPF.ViewModel
 
         public ICommand EqualFormulaCommand =>
             _equalFormulaCommand ?? (_equalFormulaCommand =
-                CommandFactory.Create(EqualFormula, CanInteractWithSpecific, nameof(EqualFormulaCommand)));
+                CommandFactory.Create(EqualFormula, CanEqual, nameof(EqualFormulaCommand)));
 
         public ObservableCollection<Formula> Formulas
         {
@@ -131,6 +131,11 @@ namespace Calculate.WPF.ViewModel
         private bool CanInteract(object obj)
         {
             return true;
+        }
+
+        private bool CanEqual(object obj)
+        {
+            return _mainViewModelService.CanEqual(TextInput);
         }
 
         private bool CanInteractWithSpecific(object obj)

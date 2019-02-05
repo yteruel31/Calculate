@@ -96,6 +96,7 @@
     <Compile Include="FormulaDataServiceTests\When_AddFormula_Is_Called.cs" />
     <Compile Include="FormulaDataServiceTests\When_GetAllFormulas_Is_Called.cs" />
     <Compile Include="MainViewModelServiceTests\When_CanCloseParenthesisToFormula_Is_Called.cs" />
+    <Compile Include="MainViewModelServiceTests\When_CanEqual_Is_Called.cs" />
     <Compile Include="MainViewModelServiceTests\When_CanInteractWithOperator_Is_Called.cs" />
     <Compile Include="MainViewModelServiceTests\When_CanOpenParenthesisToFormula_Is_Called.cs" />
     <Compile Include="MainViewModelServiceTests\When_OperatorToFormula_Called.cs" />
