@@ -1,9 +1,9 @@
-using Calculate.Lib.Services;
+﻿using Calculate.Lib.Services;
 using Calculate.Model;
 using Calculate.WPF.Extensions;
+using Calculate.WPF.Services.Validation;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using Calculate.WPF.Services.Validation;
 
 namespace Calculate.WPF.Services
 {
@@ -88,8 +88,9 @@ namespace Calculate.WPF.Services
 
         public string ParenthesisToFormula(string obj, string textInput)
         {
-            if (textInput != null && textInput.Equals("("))
-            {
+            return textInput + obj;
+        }
+
         public bool CanInteractWithOperator(string textInput)
         {
             if (textInput == null) return false;
