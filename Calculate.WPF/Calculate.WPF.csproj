@@ -107,6 +107,7 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Services\FormulaDataService.cs" />
     <Compile Include="Services\IFormulaDataService.cs" />
+    <Compile Include="Services\Validation\InputValidation.cs" />
     <Compile Include="Utility\CustomCommand.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\IMainViewModel.cs" />
