@@ -1,4 +1,4 @@
-using Calculate.Model;
+﻿using Calculate.Model;
 using System.Collections.ObjectModel;
 
 namespace Calculate.WPF.Services
@@ -22,8 +22,6 @@ namespace Calculate.WPF.Services
         string DeleteFormula(string textInput);
 
         Formula EqualFormula(string textInput);
-
-        Formula GetFormulaObject(string textInput, string result);
 
         ObservableCollection<Formula> LoadData();
 
