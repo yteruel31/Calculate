@@ -14,27 +14,24 @@ namespace Calculate.WPF.ViewModel
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly IMainViewModelService _mainViewModelService;
         private DataGridCellInfo _cellInfo;
+        private ICommand _cleanHistoryCommand;
+        private ICommand _deleteAllCommand;
+        private ICommand _deleteFormulaCommand;
+        private ICommand _equalFormulaCommand;
         private ObservableCollection<Formula> _formulas;
+        private ICommand _getDataInRowCommand;
+        private ICommand _historyFlyoutCommand;
         private bool _isOpenHistoryFlyout;
+        private ICommand _loadDataCommand;
+        private ICommand _numberToFormulaCommand;
+        private ICommand _operatorToFormulaCommand;
+        private ICommand _parenthesisToFormulaCommand;
         private string _textInput;
 
         public MainViewModel(IMainViewModelService mainViewModelService, IDialogCoordinator dialogCoordinator)
         {
             DialogCoordinator = dialogCoordinator;
             _mainViewModelService = mainViewModelService;
-
-            GetDataInRowCommand = new CustomCommand(GetDataInRow, CanInteract, nameof(GetDataInRowCommand));
-            HistoryFlyoutCommand = new CustomCommand(HistoryFlyout, CanInteract, nameof(HistoryFlyoutCommand));
-            EqualCommand = new CustomCommand(EqualFormula, CanInteractWithSpecific, nameof(EqualCommand));
-            DeleteCommand = new CustomCommand(DeleteFormula, CanInteractWithSpecific, nameof(DeleteCommand));
-            DeleteAllCommand = new CustomCommand(DeleteAllFormula, CanInteractWithSpecific, nameof(DeleteAllCommand));
-            OperatorToFormulaCommand =
-                new CustomCommand(OperatorToFormula, CanInteractWithSpecific, nameof(OperatorToFormulaCommand));
-            NumberToFormulaCommand = new CustomCommand(NumberToFormula, CanInteract, nameof(NumberToFormulaCommand));
-            ParenthesisToFormulaCommand = new CustomCommand(ParenthesisToFormula, CanParenthesisToFormula,
-                nameof(ParenthesisToFormulaCommand));
-            LoadDataCommand = new CustomCommand(LoadData, CanInteract, nameof(LoadDataCommand));
-            CleanHistoryCommand = new CustomCommand(CleanHistory, CanInteract, nameof(LoadDataCommand));
             ListButtons();
         }
 
@@ -49,13 +46,20 @@ namespace Calculate.WPF.ViewModel
             }
         }
 
-        public ICommand CleanHistoryCommand { get; set; }
+        public ICommand CleanHistoryCommand =>
+            _cleanHistoryCommand ?? (_cleanHistoryCommand =
+                CommandFactory.Create(CleanHistory, CanInteract, nameof(CleanHistoryCommand)));
 
-        public ICommand DeleteAllCommand { get; }
+        public ICommand DeleteAllCommand => _deleteAllCommand ?? (_deleteAllCommand =
+                CommandFactory.Create(DeleteAllFormula, CanInteractWithSpecific, nameof(DeleteAllCommand)));
 
-        public ICommand DeleteCommand { get; }
+        public ICommand DeleteFormulaCommand =>
+            _deleteFormulaCommand ?? (_deleteFormulaCommand =
+                CommandFactory.Create(DeleteFormula, CanInteractWithSpecific, nameof(DeleteFormulaCommand)));
 
-        public ICommand EqualCommand { get; }
+        public ICommand EqualFormulaCommand =>
+            _equalFormulaCommand ?? (_equalFormulaCommand =
+                CommandFactory.Create(EqualFormula, CanInteractWithSpecific, nameof(EqualFormulaCommand)));
 
         public ObservableCollection<Formula> Formulas
         {
@@ -67,9 +71,13 @@ namespace Calculate.WPF.ViewModel
             }
         }
 
-        public ICommand GetDataInRowCommand { get; set; }
+        public ICommand GetDataInRowCommand =>
+            _getDataInRowCommand ?? (_getDataInRowCommand =
+                CommandFactory.Create(GetDataInRow, CanInteract, nameof(GetDataInRowCommand)));
 
-        public ICommand HistoryFlyoutCommand { get; set; }
+        public ICommand HistoryFlyoutCommand =>
+            _historyFlyoutCommand ?? (_historyFlyoutCommand =
+                CommandFactory.Create(HistoryFlyout, CanInteract, nameof(HistoryFlyoutCommand)));
 
         public bool IsOpenHistoryFlyout
         {
@@ -81,17 +89,27 @@ namespace Calculate.WPF.ViewModel
             }
         }
 
-        public ICommand LoadDataCommand { get; }
+        public ICommand LoadDataCommand =>
+            _loadDataCommand ?? (_loadDataCommand =
+                CommandFactory.Create(LoadData, CanInteract, nameof(LoadDataCommand)));
 
-        public ICommand NumberToFormulaCommand { get; }
+        public ICommand NumberToFormulaCommand =>
+            _numberToFormulaCommand ?? (_numberToFormulaCommand =
+                CommandFactory.Create(NumberToFormula, CanInteract, nameof(NumberToFormulaCommand)));
 
         public ObservableCollection<string> NumericButtons { get; set; }
 
         public ObservableCollection<string> OperationButtons { get; set; }
 
-        public ICommand OperatorToFormulaCommand { get; }
+        public ICommand OperatorToFormulaCommand =>
+            _operatorToFormulaCommand ?? (_operatorToFormulaCommand =
+                CommandFactory.Create(OperatorToFormula, CanInteractWithSpecific,
+                    nameof(OperatorToFormulaCommand)));
 
-        public ICommand ParenthesisToFormulaCommand { get; }
+        public ICommand ParenthesisToFormulaCommand =>
+            _parenthesisToFormulaCommand ?? (_parenthesisToFormulaCommand =
+                CommandFactory.Create(ParenthesisToFormula, CanParenthesisToFormula,
+                    nameof(ParenthesisToFormulaCommand)));
 
         public Formula SelectedFormula { get; set; }
 
@@ -125,6 +143,7 @@ namespace Calculate.WPF.ViewModel
             _mainViewModelService.CleanHistory();
             Formulas.Clear();
         }
+
         private void DeleteAllFormula(object obj)
         {
             TextInput = null;

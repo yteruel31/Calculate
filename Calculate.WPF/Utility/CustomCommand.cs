@@ -36,4 +36,12 @@ namespace Calculate.WPF.Utility
             _execute(parameter);
         }
     }
+
+    public static class CommandFactory
+    {
+        public static CustomCommand Create(Action<object> execute, Predicate<object> canExecute, string commandName)
+        {
+            return new CustomCommand(execute, canExecute, commandName);
+        }
+    }
 }

@@ -35,15 +35,15 @@
         <KeyBinding Key="NumPad7" Command="{Binding NumberToFormulaCommand}" CommandParameter="7" />
         <KeyBinding Key="NumPad8" Command="{Binding NumberToFormulaCommand}" CommandParameter="8" />
         <KeyBinding Key="NumPad9" Command="{Binding NumberToFormulaCommand}" CommandParameter="9" />
-        <KeyBinding Key="Add" Command="{Binding OperationToFormulaCommand}" CommandParameter="+" />
-        <KeyBinding Key="Subtract" Command="{Binding OperationToFormulaCommand}" CommandParameter="-" />
-        <KeyBinding Key="Multiply" Command="{Binding OperationToFormulaCommand}" CommandParameter="*" />
-        <KeyBinding Key="Divide" Command="{Binding OperationToFormulaCommand}" CommandParameter="/" />
+        <KeyBinding Key="Add" Command="{Binding OperatorToFormulaCommand}" CommandParameter="+" />
+        <KeyBinding Key="Subtract" Command="{Binding OperatorToFormulaCommand}" CommandParameter="-" />
+        <KeyBinding Key="Multiply" Command="{Binding OperatorToFormulaCommand}" CommandParameter="*" />
+        <KeyBinding Key="Divide" Command="{Binding OperatorToFormulaCommand}" CommandParameter="/" />
         <KeyBinding Key="OemComma" Command="{Binding NumberToFormulaCommand}" CommandParameter="," />
         <KeyBinding Key="D5" Command="{Binding ParenthesisToFormulaCommand}" CommandParameter="(" />
         <KeyBinding Key="OemOpenBrackets" Command="{Binding ParenthesisToFormulaCommand}" CommandParameter=")" />
-        <KeyBinding Key="Enter" Command="{Binding EqualCommand}" />
-        <KeyBinding Key="Back" Command="{Binding DeleteCommand}" />
+        <KeyBinding Key="Enter" Command="{Binding EqualFormulaCommand}" />
+        <KeyBinding Key="Back" Command="{Binding DeleteFormulaCommand}" />
     </Window.InputBindings>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
@@ -137,7 +137,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding Path=DataContext.OperationToFormulaCommand, ElementName=Window}"
+                    <Button Command="{Binding Path=DataContext.OperatorToFormulaCommand, ElementName=Window}"
                             CommandParameter="{Binding}" Content="{Binding}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -145,9 +145,9 @@
         <Button Command="{Binding NumberToFormulaCommand}" CommandParameter="0" Grid.Row="7" Grid.Column="1"
                 Grid.ColumnSpan="2" >0</Button>
         <Button Command="{Binding NumberToFormulaCommand}" CommandParameter="," Grid.Row="7" Grid.Column="3" >,</Button>
-        <Button Command="{Binding DeleteCommand}" Grid.Row="3" Grid.Column="1" >&lt;-</Button>
+        <Button Command="{Binding DeleteFormulaCommand}" Grid.Row="3" Grid.Column="1" >&lt;-</Button>
         <Button Command="{Binding DeleteAllCommand}" Grid.Row="3" Grid.Column="2" >C</Button>
-        <Button Command="{Binding EqualCommand}" Grid.Row="8" Grid.Column="1"
+        <Button Command="{Binding EqualFormulaCommand}" Grid.Row="8" Grid.Column="1"
                 Grid.ColumnSpan="4" >=</Button>
         <Button Command="{Binding ParenthesisToFormulaCommand}" CommandParameter="(" Grid.Row="3" Grid.Column="3" >(</Button>
         <Button Command="{Binding ParenthesisToFormulaCommand}" CommandParameter=")" Grid.Row="3" Grid.Column="4" >)</Button>
