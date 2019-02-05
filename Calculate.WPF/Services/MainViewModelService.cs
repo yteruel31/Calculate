@@ -1,4 +1,4 @@
-﻿using Calculate.Lib.Services;
+using Calculate.Lib.Services;
 using Calculate.Model;
 using Calculate.WPF.Extensions;
 using System.Collections.ObjectModel;
@@ -26,9 +26,11 @@ namespace Calculate.WPF.Services
             return !string.IsNullOrEmpty(textInput);
         }
 
-        public bool CanParenthesisToFormula(string obj, string textInput)
+        public bool CanCloseParenthesisToFormula(string textInput)
         {
-            return textInput != null || obj != ")";
+            if (textInput == null) return false;
+            return !textInput.EndsWith("(") &&
+                   !InputValidation.IsEndWithOperator(textInput);
         }
 
         public void CleanHistory()

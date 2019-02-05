@@ -1,4 +1,4 @@
-﻿using Calculate.Model;
+using Calculate.Model;
 using System.Collections.ObjectModel;
 
 namespace Calculate.WPF.Services
@@ -6,6 +6,8 @@ namespace Calculate.WPF.Services
     public interface IMainViewModelService
     {
         void AddFormula(Formula formula);
+
+        bool CanCloseParenthesisToFormula(string textInput);
 
         bool CanInteractWithSpecific(string textInput);
 

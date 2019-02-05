@@ -1,4 +1,4 @@
-﻿using Calculate.Model;
+using Calculate.Model;
 using Calculate.WPF.Services;
 using Calculate.WPF.Utility;
 using MahApps.Metro.Controls.Dialogs;
@@ -27,6 +27,7 @@ namespace Calculate.WPF.ViewModel
         private ICommand _operatorToFormulaCommand;
         private ICommand _parenthesisToFormulaCommand;
         private string _textInput;
+        private ICommand _closeParenthesisToFormulaCommand;
 
         public MainViewModel(IMainViewModelService mainViewModelService, IDialogCoordinator dialogCoordinator)
         {
@@ -110,6 +111,10 @@ namespace Calculate.WPF.ViewModel
             _parenthesisToFormulaCommand ?? (_parenthesisToFormulaCommand =
                 CommandFactory.Create(ParenthesisToFormula, CanParenthesisToFormula,
                     nameof(ParenthesisToFormulaCommand)));
+        public ICommand CloseParenthesisToFormulaCommand =>
+            _closeParenthesisToFormulaCommand ?? (_closeParenthesisToFormulaCommand =
+                CommandFactory.Create(ParenthesisToFormula, CanCloseParenthesisToFormula,
+                    nameof(CloseParenthesisToFormulaCommand)));
 
         public Formula SelectedFormula { get; set; }
 
@@ -134,8 +139,9 @@ namespace Calculate.WPF.ViewModel
         }
 
         private bool CanParenthesisToFormula(object obj)
+        private bool CanCloseParenthesisToFormula(object obj)
         {
-            return _mainViewModelService.CanParenthesisToFormula(obj as string, TextInput);
+            return _mainViewModelService.CanCloseParenthesisToFormula(TextInput);
         }
 
         private void CleanHistory(object obj)
