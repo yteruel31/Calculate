@@ -81,8 +81,11 @@ namespace Calculate.WPF.Services
         {
             if (textInput != null && textInput.Equals("("))
             {
-                return textInput.Insert(1, "0)");
-            }
+        public bool CanInteractWithOperator(string textInput)
+        {
+            if (textInput == null) return false;
+            return !textInput.EndsWith("(");
+        }
             
             return textInput + obj;
         }

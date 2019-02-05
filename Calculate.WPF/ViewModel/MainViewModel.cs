@@ -104,7 +104,7 @@ namespace Calculate.WPF.ViewModel
 
         public ICommand OperatorToFormulaCommand =>
             _operatorToFormulaCommand ?? (_operatorToFormulaCommand =
-                CommandFactory.Create(OperatorToFormula, CanInteractWithSpecific,
+                CommandFactory.Create(OperatorToFormula, CanInteractWithOperator,
                     nameof(OperatorToFormulaCommand)));
 
         public ICommand ParenthesisToFormulaCommand =>
@@ -136,6 +136,10 @@ namespace Calculate.WPF.ViewModel
         private bool CanInteractWithSpecific(object obj)
         {
             return _mainViewModelService.CanInteractWithSpecific(TextInput);
+        }
+        private bool CanInteractWithOperator(object obj)
+        {
+            return _mainViewModelService.CanInteractWithOperator(TextInput);
         }
 
         private bool CanParenthesisToFormula(object obj)
