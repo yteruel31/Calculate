@@ -1,4 +1,4 @@
-<controls:MetroWindow x:Class="Calculate.WPF.View.MainView"
+﻿<controls:MetroWindow x:Class="Calculate.WPF.View.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -40,7 +40,7 @@
         <KeyBinding Key="Multiply" Command="{Binding OperatorToFormulaCommand}" CommandParameter="*" />
         <KeyBinding Key="Divide" Command="{Binding OperatorToFormulaCommand}" CommandParameter="/" />
         <KeyBinding Key="OemComma" Command="{Binding NumberToFormulaCommand}" CommandParameter="," />
-        <KeyBinding Key="D5" Command="{Binding ParenthesisToFormulaCommand}" CommandParameter="(" />
+        <KeyBinding Key="D5" Command="{Binding OpenParenthesisToFormulaCommand}" CommandParameter="(" />
         <KeyBinding Key="OemOpenBrackets" Command="{Binding CloseParenthesisToFormulaCommand}" CommandParameter=")" />
         <KeyBinding Key="Enter" Command="{Binding EqualFormulaCommand}" />
         <KeyBinding Key="Back" Command="{Binding DeleteFormulaCommand}" />
@@ -149,7 +149,7 @@
         <Button Command="{Binding DeleteAllCommand}" Grid.Row="3" Grid.Column="2" >C</Button>
         <Button Command="{Binding EqualFormulaCommand}" Grid.Row="8" Grid.Column="1"
                 Grid.ColumnSpan="4" >=</Button>
-        <Button Command="{Binding ParenthesisToFormulaCommand}" CommandParameter="(" Grid.Row="3" Grid.Column="3" >(</Button>
+        <Button Command="{Binding OpenParenthesisToFormulaCommand}" CommandParameter="(" Grid.Row="3" Grid.Column="3" >(</Button>
         <Button Command="{Binding CloseParenthesisToFormulaCommand}" CommandParameter=")" Grid.Row="3" Grid.Column="4" >)</Button>
         <TextBox Text="{Binding TextInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  FontSize="{Binding Converter={StaticResource FontSizeConverter}, RelativeSource={RelativeSource Mode=Self}, Path=ActualWidth}"

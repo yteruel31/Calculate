@@ -13,7 +13,7 @@ namespace Calculate.WPF.Services
 
         bool CanInteractWithSpecific(string textInput);
 
-        bool CanParenthesisToFormula(string obj, string textInput);
+        bool CanOpenParenthesisToFormula(string textInput);
 
         void CleanHistory();
 

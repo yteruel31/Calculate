@@ -25,7 +25,7 @@ namespace Calculate.WPF.ViewModel
         private ICommand _loadDataCommand;
         private ICommand _numberToFormulaCommand;
         private ICommand _operatorToFormulaCommand;
-        private ICommand _parenthesisToFormulaCommand;
+        private ICommand _openParenthesisToFormulaCommand;
         private string _textInput;
         private ICommand _closeParenthesisToFormulaCommand;
 
@@ -107,10 +107,10 @@ namespace Calculate.WPF.ViewModel
                 CommandFactory.Create(OperatorToFormula, CanInteractWithOperator,
                     nameof(OperatorToFormulaCommand)));
 
-        public ICommand ParenthesisToFormulaCommand =>
-            _parenthesisToFormulaCommand ?? (_parenthesisToFormulaCommand =
-                CommandFactory.Create(ParenthesisToFormula, CanParenthesisToFormula,
-                    nameof(ParenthesisToFormulaCommand)));
+        public ICommand OpenParenthesisToFormulaCommand =>
+            _openParenthesisToFormulaCommand ?? (_openParenthesisToFormulaCommand =
+                CommandFactory.Create(ParenthesisToFormula, CanOpenParenthesisToFormula,
+                    nameof(OpenParenthesisToFormulaCommand)));
         public ICommand CloseParenthesisToFormulaCommand =>
             _closeParenthesisToFormulaCommand ?? (_closeParenthesisToFormulaCommand =
                 CommandFactory.Create(ParenthesisToFormula, CanCloseParenthesisToFormula,

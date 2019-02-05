@@ -33,6 +33,13 @@ namespace Calculate.WPF.Services
                    !InputValidation.IsEndWithOperator(textInput);
         }
 
+        public bool CanOpenParenthesisToFormula(string textInput)
+        {
+            if (textInput == null) return true;
+            return !InputValidation.IsEndWithNumber(textInput) &&
+                   !textInput.EndsWith(")");
+        }
+
         public void CleanHistory()
         {
             _formulaDataService.DeleteFormula();
@@ -42,6 +49,7 @@ namespace Calculate.WPF.Services
         {
             return textInput.Remove(textInput.Length - 1);
         }
+
         public Formula EqualFormula(string textInput)
         {
             var operand = new CalculationService();
@@ -57,6 +65,7 @@ namespace Calculate.WPF.Services
                 Result = result
             };
         }
+
         public ObservableCollection<Formula> LoadData()
         {
             return _formulaDataService.GetAllFormulas().ToObservableCollection();
